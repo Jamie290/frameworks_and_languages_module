@@ -4,7 +4,7 @@ FROM python:${PYTHON_IMAGE_VERSION}-alpine as base
     ENV PATH_SITE_PACKAGES=/usr/local/lib/python${PYTHON_IMAGE_VERSION}/site-packages/
 
     WORKDIR /app/
-
+# Hello
 FROM base as python_dependencies_test
     RUN pip install pytest
 
