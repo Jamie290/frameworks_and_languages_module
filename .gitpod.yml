@@ -8,10 +8,10 @@
 # Ports to expose on workspace startup
 ports:
   - port: 8000
-    onOpen: open-preview
+    #onOpen: open-preview
     visibility: public
   - port: 8001
-    onOpen: open-preview
+    #onOpen: open-preview
     visibility: public
 
 

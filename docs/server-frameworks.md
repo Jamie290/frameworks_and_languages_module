@@ -3,43 +3,52 @@ Server Frameworks
 
 ### Objectives
 * Understand how to follow a tutorial to run "Hello World" for a range of server side frameworks
-* Understand a range of server frameworks features
-    1. To justify your choice of server framework (assignment 1)
-    2. To critique the missing features of the `example_server` (assignment 1)
+* Start to understand a range of server frameworks features
+    * To justify your choice of server framework (assignment 2)
 
 ### Tasks for next week
-1. Use a server framework
-    * Find a server framework on your own
+1. Use a server framework + pass more tests
+    * Explore a server framework on your own by attempting to follow a tutorial
     * Run "Hello World" server
     * Return a JSON response (e.g. `GET /test --> {"foo": "bar"}`)
-2. Research a server framework (for any language)
-    * Come prepared to talk about it's features + show link to any example code (3min)
+    * Return a JSON response for Assignment 1 (e.g. `GET /items --> []`)
+2. Attempt to write about a server framework features in `technical_report.md`
+
+### This afternoon
+* Full worked example of RSPV server in Express.js
 
 ### Next week
-* Client frameworks
-    * Hello World
+* Writing Workshop
+* Few last server bits
     * [Cross-origin resource sharing](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
         * HTTP `OPTIONS` request with `Access-Control-Allow-Origin`
+* Client frameworks
     * [Single-page application](https://en.wikipedia.org/wiki/Single-page_application)
+    * Hello World
+
+    
+
 
 Overview
 --------
 
-* Terminology + Tech (15min)
-* Django (1 hour)
-* Falcon (30 min)
-* (Overview) Django REST Framework + Pyramid (30 min)
-* dotnet csproj (15min)
-* Sanic (30 min)
-* express.js (30 min)
-* Ruby on Rails, Gin, Laravel (30 min) - if we have time
-* Assignment Assistance (30min)
+* Terminology + Tech (30min)
+    * Middleware
+* Live code server framework tutorials
+    * Django Tutorial (1.5 hour)
+    * Falcon (30 min)
+    * dotnet (15min)
+    * express.js (30 min)
+    * sanic (if time?)
+* Assignment 2 Overview (30min)
+
 
 History + Terms
 ---------------
 
-* [Representational state transfer](https://en.wikipedia.org/wiki/Representational_state_transfer)
+* [REST: Representational state transfer](https://en.wikipedia.org/wiki/Representational_state_transfer)
     * > RESTful web APIs are typically loosely based on HTTP methods to access resources via URL-encoded parameters and the use of JSON or XML to transmit data.
+    * GET, POST, DELETE, PUT, PATCH
 * [Common Gateway Interface (CGI)](https://en.wikipedia.org/wiki/Common_Gateway_Interface)
     * Just drop a script in an executable folder (new process on each request)
 * [Web Server Gateway Interface (WSGI)](https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface)
@@ -49,41 +58,77 @@ History + Terms
 * [Middleware](https://en.wikipedia.org/wiki/Middleware)
     * Pre-request + Post-response hooks
     * Like _decorators_ (the language feature we looked at in the languages session)
+* Traditional web applications - server templates
 * [Single-page application](https://en.wikipedia.org/wiki/Single-page_application)
     * A single-page application (SPA) is a web application or website that interacts with the user by dynamically rewriting the current web page with new data from the web server, instead of the default method of a web browser loading entire new pages. The goal is faster transitions that make the website feel more like a native app. 
+* WebSockets
+    * ongoing bidirectional connections - many server frameworks now support this
+    * This is in addition to REST
 
 
 Features of Server Frameworks
 -----------------------------
 
-* Middleware
-* Security/Authentication framework
+Features probably needed for Assignment 1
+
 * Routing
+    * matching urls to functions/code
 * Views
+    * The logic of the application
+* Data handling tools
+    * Input - urlencoding, form encoding, json
+    * Output - text, json, xml
+* Middleware
+
+Features probably not needed for Assignment 1
+
 * Model - Datamodel (ORM)
 * Templates
+    * Rendering data into an html layout (on the server)
 * Serializers (output data)
     * Streams
-* Websockets
+* Security/Authentication framework
+* Websockets (realtime)
 * Plugin or expansion framework
 
 
-Django
-------
+
+Server Frameworks
+-----------------
+
+Live coded examples
+
+
+### Django (Python)
+
 
 What is a server side framework?
 Let's do a tutorial to find out what the components are.
 (this is just to explore the further features - remember our goal for the assignment is to create a RESTApi to a spec)
 
 * https://www.djangoproject.com/
+    * Install Django
+    * Tutorial Part 1 to Part 3
 * Tutorial (first 3 parts)
-    * https://docs.djangoproject.com/en/3.2/intro/tutorial01/
-    * https://docs.djangoproject.com/en/3.2/intro/tutorial02/
-    * https://docs.djangoproject.com/en/3.2/intro/tutorial03/
 * Let's live code!
     * https://gitpod.io/#https://github.com/gitpod-io/template-python-django
 
-### Further Django Reading
+Quick note
+```python
+# mysite/settings.py 
+# addition
+# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-trusted-origins
+CSRF_TRUSTED_ORIGINS = [
+    'http://*.gitpod.io',
+    'https://*.gitpod.io',
+]
+```
+In django templates
+```
+{# <p>This is comment</p> #}
+```
+
+#### Further Django Reading
 * [Django Girls Tutorial](https://tutorial.djangogirls.org/en/)
     * Wonderful tutorial from the basics up
 * [Why Django is the Best Web Framework for Your Project](https://steelkiwi.com/blog/why-django-best-web-framework-your-project/)
@@ -99,10 +144,11 @@ Let's do a tutorial to find out what the components are.
 * [Anatomy of a Django/HTMX Project](https://danjacob.net/posts/anatomyofdjangohtmxproject/)
 
 
-Falcon Framework
-----------------
+### Falcon Framework (Python)
 
-http://falconframework.org/
+
+* http://falconframework.org/
+    * https://falcon.readthedocs.io/en/stable/user/quickstart.html
 
 Let's build it in gitpod - livecode - containerize
 * bind/host to `0.0.0.0` + explain
@@ -111,15 +157,15 @@ Let's build it in gitpod - livecode - containerize
     * > Falcon is a WSGI-compliant web framework designed to build RESTful APIs without requiring external code library dependencies.
 
 * https://impythonist.wordpress.com/2015/09/12/build-massively-scalable-restful-api-with-falcon-and-pypy/
-    * > Namaste everyone. If you build a RESTFul API for some purpose, what technology stack you use in python and why?. I may receive the following answers from you.
+    * > If you build a RESTFul API for some purpose, what technology stack you use in python and why?. I may receive the following answers from you.
       > 1)  I use Flask with Flask-RESTFul
       > 2)  I use (Django + Tastypie) or (Django + REST Framework)
       > Both options are not suitable for me. Because there is a very good light-weight API framework available in python called Falcon. I always keep my project and REST API loosely coupled. It means my REST API knows little about the Django or Flask project that is being implemented. Creating cloud API’s with low-level web framework than a bulky wrapped one always speeds up my API.
 
 
 
-Django REST Framework
----------------------
+### Django REST Framework (Python)
+
 
 https://www.django-rest-framework.org/
 
@@ -133,56 +179,47 @@ https://www.django-rest-framework.org/tutorial/quickstart/
 * Multiple dateformat serializers
 * Generates openAPI spec from working program
 
-Pyramid
--------
-
-https://trypyramid.com/
-https://docs.pylonsproject.org/projects/pyramid/en/2.0-branch/quick_tutorial/index.html
-https://docs.pylonsproject.org/projects/pyramid/en/2.0-branch/quick_tutorial/json.html
-Tests
-
-* Decoupled views routed with decorators
-* No built in templating language (you select one)
-* No built in database ORM - you select one - SQLAlchemy is great
-* Supports an alternate routing method called _traversal_ (dynamic)
-    * [Hello Traversal World](https://docs.pylonsproject.org/projects/pyramid/en/2.0-branch/narr/hellotraversal.html)
 
 
-dotnet csproj
--------------
+# ASP Core dotnet (c#)
 
-* https://github.com/calaldees/dotnet_docker_test
+
+* see `/examples/server/dotnet*`
     * My demo for building and running Microsofts demo TodoApi app in docker containers
-1. Start a new gitpod workspace from the repo above (remember the way to do this)
-    * `https://gitpod.io/#https://github.com/USERNAME/REPONAME`
-2. build and run the example application
+1. build and run the example application
     * `http://localhost:5000/WeatherForecast`
-3. Inspect the `TodoApi` folder
+2. Inspect the `TodoApi` folder
     * Try to identify the components of the web app
     * Look at the `Dockerfile`. Try to understand the steps it might be doing
 
-* Discuss: What is Microsoft trying to achieve?
-    * How might this relate to our criteria for selecting a framework?
+### Further c# notes
+
+
+* [ASP.NET Web API Tutorials](https://www.tutorialsteacher.com/webapi)
+* [REST API in C#](https://www.kindsonthegenius.com/how-to-create-rest-api-in-net-using-c-and-visual-studio/)
+* [SAP NET Introduction](https://www.c-sharpcorner.com/UploadFile/4b0136/restful-api-in-Asp-Net-introduction-of-rest-web-api/)
+* [Using System.Text.Json in a Web API Project](https://code-maze.com/introduction-system-text-json-examples/)
+* [OWIN](http://owin.org/) - Open Web Interface for .NET
 
 
 
+### Nancy (c#)
 
+Dead project
 
-[OWIN](http://owin.org/) - Open Web Interface for .NET
-* [](https://www.kindsonthegenius.com/how-to-create-rest-api-in-net-using-c-and-visual-studio/)
-* [](https://www.c-sharpcorner.com/UploadFile/4b0136/restful-api-in-Asp-Net-introduction-of-rest-web-api/)
-
-* ASP.NET Core Web API
-    * [Using System.Text.Json in a Web API Project](https://code-maze.com/introduction-system-text-json-examples/)
-    * [ASP.NET Web API Tutorials](https://www.tutorialsteacher.com/webapi)
-
-
-Nancy - csharp
------
-
-TODO
+https://www.reddit.com/r/dotnet/comments/frq6yh/nancyfx_is_dead_what_next/
 
 http://nancyfx.org/
+https://www.nuget.org/packages/Nancy#readme-body-tab
+```
+mkdir nancy_test
+cd nancy_test
+dotnet new console
+dotnet add package Nancy --version 2.0.0
+```
+https://github.com/jpf/dotnet-core-and-nancy-example
+
+
 
 https://github.com/karasek/OWIN-Test-Samples
 SignalIR
@@ -191,21 +228,36 @@ TODO: https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor
 https://github.com/markrendle/Flux
 
 
-Snaic
------
+### Falco (F#)
+
+https://github.com/pimbrouwers/Falco F# functional
+* > Functional-first toolkit for building brilliant ASP.NET Core applications using F#. 
+
+### Stl.Fusion (C#)
+
+Abstracting the entire server/client into one amorphous mega blog that deploys on the cloud
+
+* https://github.com/servicetitan/Stl.Fusion C# Super server+client mega solution
+    * Key concept - "eventual consistency" - creating invalidation methods is key
+
+
+### Snaic (python async)
+
 
 * https://sanicframework.org/
 
 1. Follow "Getting Started" and run the basic app
     * https://sanicframework.org/en/guide/getting-started.html#getting-started
-2. Add a response to the path `/test` to return the json `{"foo": "bar"}`
     * https://sanicframework.org/en/guide/basics/response.html#methods
+    * https://sanic.dev/en/guide/deployment/development.html#cli
+        * `--debug`
+2. Add a response to the path `/test` to return the json `{"foo": "bar"}` - test with curl and browser
 3. Build a docker container to run this
     * `Dockerfile`
         * ```Dockerfile
             FROM python:slim
             WORKDIR /app/
-            RUN  ???  ## Install dependencies/frameworks/libraries here ?? what did you install in Getting Started?
+            RUN pip ???  ## Install dependencies/frameworks/libraries here ?? what did you install in Getting Started?
             COPY . .
             ENTRYPOINT ["???", "--host", "0.0.0.0", "server.app"]
             ```
@@ -231,30 +283,45 @@ Snaic
 * [Awesome Sanic](https://github.com/mekicha/awesome-sanic) - A curated list of awesome Sanic resources and extensions
 * [Python RESTful Web Framework Generator](https://github.com/guokr/swagger-py-codegen)
 
-Express.js
-----------
 
-https://expressjs.com/
+### Express.js (javascript)
+
+1. Create stub app
+    * https://expressjs.com/
+    * https://expressjs.com/en/starter/hello-world.html
+    * https://expressjs.com/en/guide/routing.html
+        * `res.json()` https://expressjs.com/en/4x/api.html#res.json
+2. Add a response to the path `/test` to return the json `{"foo": "bar"}` - test with curl and browser
+3. Create Container
+    * Dockerfile
+        * ```Dockerfile
+            FROM node
+            WORKDIR /app/
+            RUN npm install ???  # what was the package?
+            COPY *.js .
+            CMD ["???", "app.js"]
+            ```
+    * Makefile
+        * ```Makefile
+            DOCKER_IMAGE:=express_test
+            build:
+                docker build --tag ${DOCKER_IMAGE} .
+            run:
+                docker run --publish 8000:8000 ${DOCKER_IMAGE}
+            ```
+    * Exiting from docker
+        * ```javascript
+            // Docker container exit handler - https://github.com/nodejs/node/issues/4182
+            process.on('SIGINT', function() {process.exit()})
+            ```
 
 
-* Generator
-* Routes (not really explained router)
-* Static
-    * http://localhost:3000/stylesheets/style.css
-
-Guide
-https://expressjs.com/en/guide/routing.html
-
-`res.json()`
-https://expressjs.com/en/4x/api.html#res.json
-
-
-* Frameworks built on Frameworks
+* Further Reading
     * [Frameworks built on Express](https://expressjs.com/en/resources/frameworks.html)
+    * Frameworks can be built on other frameworks
 
 
-Ruby on Rails
--------------
+### Ruby on Rails (Ruby)
 
 * https://guides.rubyonrails.org/getting_started.html
 * gem install rails
@@ -270,8 +337,9 @@ Ruby on Rails
 * Declining in popularity
 * Sledgehammer to crack a nut
 
-Laravel
--------
+
+### Laravel (php)
+
 
 * https://laravel.com/
     * Look at the echo system
@@ -288,92 +356,52 @@ Laravel
     * https://laravel.com/docs/8.x/responses#strings-arrays
 
 
-Gin - golang
----
+### Gin (golang)
 
 * [Gin Web Framework](https://gin-gonic.com/)
 * [Tutorial: Developing a RESTful API with Go and Gin](https://golang.org/doc/tutorial/web-service-gin)
 * [TutorialEdge.net - Creating a RESTful API With Golang](https://tutorialedge.net/golang/creating-restful-api-with-golang/)
 
-I may create a docker example of this for next session
+I want to create a docker demo of this soon
 
-Echo -golang
-----
+
+### Echo (golang)
 
 * [echo](https://github.com/labstack/echo) -  High performance, minimalist Go web framework 
 
 
-Zitonic - Earlang
--------
+### Zitonic (Earlang)
 
 * [Zotonic, the Erlang Web Framework](http://zotonic.com/)
 
 
+### Pyramid (Python)
 
-Assignment 1 - Assistance
--------------------------
+https://trypyramid.com/
+https://docs.pylonsproject.org/projects/pyramid/en/2.0-branch/quick_tutorial/index.html
+https://docs.pylonsproject.org/projects/pyramid/en/2.0-branch/quick_tutorial/json.html
+Tests
 
-### Critique of prototype
-* Excellent analysis and critique that identifies topics such as: 
-    * technology limitations,
-    * anti-patterns,
-    * readability,
-    * modality,
-    * maintainability,
-    * scale-ability,
-    * limitations of unit testing,
-    * adherence to standards,
-    * security,
-    * and wider business issues
+* Decoupled views routed with decorators
+* No built in templating language (you select one)
+* No built in database ORM - you select one - SQLAlchemy is great
+* Supports an alternate routing method called _traversal_ (dynamic)
+    * [Hello Traversal World](https://docs.pylonsproject.org/projects/pyramid/en/2.0-branch/narr/hellotraversal.html)
 
-* Use the inverse of all the 'good things' that the other frameworks provide
-    * no support for standards
-    * incomplete implementation
-    * performance
-    * stability
-    * community
-    * security
-    * expandability
 
-### Server framework justification
-* Mark scheme
-    * Justified  the  features  of  a  framework  in  comparison  to  other  frameworks  to provide a balanced and well researched justification.  
-    * Factors such as:
-        * spin-uptime,
-        * developer familiarity,
-        * compatibility,
-        * complexity of design patterns,
-        * learn-ing curve, 
-        * theoretical throughput,
-        * deploy-ability,
-        * hire-ability,
-        * cost, 
-        * developer experience,
-        * developer tools,
-        * security,
-        * developer community,
-        * documentation 
-        * and other business factors are discussed.
-    * Examples of existing use-cases are used to strengthen the argument.
-    * Benefits and drawbacks are explored, drawbacks are clearly compared against business impact/risk
-* Golden rule for technical reports
-    * Describe the technical issue/statement
-    * Then describe what that means for your organisation
+Assignment 2
+------------
+
+* Demo 
+    * Markdown template + markdown
+    * Feature example (django orm) 
+    * Weekly writing workshop 
 
 
 
-* What requirements might you have in the future?
-    * Hiring developers
-    * Admin staff to manage items? (non developers?)
-    * Speed/scale
-    * Beyond one server? (one database - loads of app servers - load balanced)
-    * Data persistence
-    * Websockets (live updates/chat?)
-    * Static storage (images/uploads)
-    * [JSON Web Token (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) - multiple servers
+Further Reading
+---------------
 
-
-### Hints
 * General Reading
     * [Representational state transfer](https://en.wikipedia.org/wiki/Representational_state_transfer)
         * > RESTful web APIs are typically loosely based on HTTP methods to access resources via URL-encoded parameters and the use of JSON or XML to transmit data.
@@ -409,11 +437,11 @@ Unsorted
 * [PostgREST](https://postgrest.org/)
     * > PostgREST is a standalone web server that turns your PostgreSQL database directly into a RESTful API. The structural constraints and permissions in the database determine the API endpoints and operations.
 
-https://rapidapi.com/blog/best-nodejs-frameworks/
-Performance community ease of use, best for
+* [The Best NodeJS Frameworks for 2021](https://rapidapi.com/blog/best-nodejs-frameworks/)
+    * Performance community ease of use, best for
+    * Frameworks
+        * Express
+        * Sails
+        * Meteor
+        * Loopback
 
-https://github.com/pimbrouwers/Falco F# functional
-* > Functional-first toolkit for building brilliant ASP.NET Core applications using F#. 
-
-* https://github.com/servicetitan/Stl.Fusion C# Super server+client mega solution
-    * Key concept - "eventual consistency" - creating invalidation methods is key

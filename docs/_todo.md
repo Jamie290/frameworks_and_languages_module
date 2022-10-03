@@ -631,3 +631,71 @@ Setup
 * Browser
 	* Allow popups for `https://gitpod.io`
 
+
+
+
+
+---
+
+
+Assignment 1 - Assistance
+-------------------------
+
+### Critique of prototype
+* Excellent analysis and critique that identifies topics such as: 
+    * technology limitations,
+    * anti-patterns,
+    * readability,
+    * modality,
+    * maintainability,
+    * scale-ability,
+    * limitations of unit testing,
+    * adherence to standards,
+    * security,
+    * and wider business issues
+
+* Use the inverse of all the 'good things' that the other frameworks provide
+    * no support for standards
+    * incomplete implementation
+    * performance
+    * stability
+    * community
+    * security
+    * expandability
+
+### Server framework justification
+* Mark scheme
+    * Justified  the  features  of  a  framework  in  comparison  to  other  frameworks  to provide a balanced and well researched justification.  
+    * Factors such as:
+        * spin-uptime,
+        * developer familiarity,
+        * compatibility,
+        * complexity of design patterns,
+        * learn-ing curve, 
+        * theoretical throughput,
+        * deploy-ability,
+        * hire-ability,
+        * cost, 
+        * developer experience,
+        * developer tools,
+        * security,
+        * developer community,
+        * documentation 
+        * and other business factors are discussed.
+    * Examples of existing use-cases are used to strengthen the argument.
+    * Benefits and drawbacks are explored, drawbacks are clearly compared against business impact/risk
+* Golden rule for technical reports
+    * Describe the technical issue/statement
+    * Then describe what that means for your organisation
+
+
+
+* What requirements might you have in the future?
+    * Hiring developers
+    * Admin staff to manage items? (non developers?)
+    * Speed/scale
+    * Beyond one server? (one database - loads of app servers - load balanced)
+    * Data persistence
+    * Websockets (live updates/chat?)
+    * Static storage (images/uploads)
+    * [JSON Web Token (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) - multiple servers
