@@ -18,7 +18,6 @@ app.get('/items/', (req, res) => {
   res.json(ITEMS)
 }) 
 
-
 app.post('/item/', (req, res) => {
   //console.log('POST POST POST!!!')
   //console.log(req.body)
