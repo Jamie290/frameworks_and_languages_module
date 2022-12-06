@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>FreeCycle</title>
+    <style>
+
+    /* styles here */
+
+    </style>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+   
+    <h1>FreeCycle</h1>
+
+    <!-- html here -->
+
+ <div id="app">
+    {{ message }}
+    <form @submit.prevent="addItem">
+        <div class="form-group"></div>
+            <label for="user_id">UserName : </label>
+            <input class="form-control" name="user_id" placeholder="user_id">
+        
+        <div class="form-group"></div>
+            <label for="lat">lat : </label>
+            <input class="form-control" name="lat" placeholder="lat">
+
+        <div class="form-group"></div>
+            <label for="lon">lon : </label>
+            <input class="form-control" name="lon" placeholder="lon">
+
+        <div class="form-group"></div>
+            <label for="image">image : </label>
+            <input class="form-control" name="image" placeholder="image">
+
+        <div class="form-group"></div>
+            <label for="keywords">Keywords : </label>
+            <input class="form-control" name="keywords" placeholder="keywords">
+        
+        <div class="form-group"></div>
+            <label for="Description">Description : </label>
+            <textarea class="form-control" name="description" placeholder="description" rows="3"></textarea>
+        <button data-action="addItem">Create Item</button>
+    </form>
+
+
+    </div>
+
+        <h2>Items</h2>
+<ul>
+    <li><!-- Somehow templated for each item -->
+        <img src="item.image">
+        <span data-field="id">{{item.id}}</span>
+        <span data-field="lat">??? item.lat ???</span>
+        ...
+        <button data-action="delete" someKindOfOnClickAction="deleteItem(item.id)">Delete</button>
+    </li>
+</ul>
+<script type="module">
+
+    // javascript here
+
+
+  
+const { createApp } = Vue
+
+createApp({
+    data() {
+      return {
+        message: 'Hello Vue!'
+      }
+    },
+    methods: { 
+        addItem() {
+            console.log("addItem")
+
+        }
+
+    }
+
+}).mount('#app')
+
+
+</script>
+</body>
+</html>
