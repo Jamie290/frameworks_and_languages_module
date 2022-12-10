@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true })) //allows specific access to n
 app.use(cors())
 app.use(express.json());
 
-ITEMS = {
+var ITEMS = {
   1: {
       "id": 1,
       "user_id": "user1234",
@@ -58,14 +58,19 @@ app.get('/', (req, res) => {
 
 
 app.get('/items', (req, res) => {
-  res.send(ITEMS)
+  res.status(200).json(ITEMS[id])
 }) 
 
-app.post('/item', (req, res) => {
-  console.log(req.body)
-  ITEMS.push(req.body)
-  res.status(201).json(req.body)
-})
+app.delete('/item/:id', (req,res) => { 
+  var id = parseInt(req.params.id)
+  if(ITEMS.hasOwnProperty(id)){
+    delete ITEMS[id]
+    res.status(204).send("Ok")
+  }
+  else{
+    res.status(404).send("Item not found")
+  }  
+  })
 
 app.use(cors({
   origin: "http://localhost:8000/",
@@ -75,4 +80,5 @@ app.use(cors({
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })
-
+// Docker container exit handler - https://github.com/nodejs/node/issues/4182
+process.on('SIGINT', function() {process.exit()})
