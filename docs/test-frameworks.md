@@ -4,6 +4,39 @@ Test Frameworks
 Objectives:
 * Understand the purpose of a unit test framework
 * Understand the purpose of a browser test framework
+* (CORS - so you can make more server progress)
+
+
+What are Test Frameworks
+-----
+
+* Framework to help us check that code is functioning correctly
+* There are different frameworks for different parts of our software (server, client)
+* Most languages have `assert`ions as a language feature
+    * Example of writing a test without a framework or without `assert`
+        * ```python
+            expected = "my expected result"
+            result = do_thing()
+            if (result == expected) {
+                print("it worked")
+                add_test_to_passed_list('do_thing')
+            } else {
+                print(f'it failed - I expected {expected=} but I got {result=}')
+                add_test_to_failed_list('do_thing', expected, result)
+            }
+            ```
+    * With framework
+        * ```python
+            def test_do_thing() {
+                assert do_thing() == "my expected result"
+            }
+            ```
+* Unit test test individual functions (or specific functionality) without dependencies
+    * Dependent services are normally "mocked" (key terminology)
+    * Super fast feedback! (in seconds or minuets)
+* Integration tests - test that a whole system, end to end, with all dependencies are working
+    * e.g. with a full database + gui
+    * Normally take a lot of resources and time (10's of minuets or hours)
 
 
 PyTest (A unittest framework)
@@ -16,25 +49,45 @@ PyTest (A unittest framework)
 ### TASK: run the basic PyTest example
 
 ```bash
-# Create `pytest` folder
-# Create `test_sample.py` file
+# Create `pytest_example` folder
+# Create `test_sample.py` file form https://pytest.org/
 pip install pytest  # (only once)
 pytest
+# should run test_sample.py and produce an error
 ```
 
-### TASK: Extend the base example
+### TASK: Create some tests
 
-* Add the following functions
-    * `add(a, b)`
-    * `multiply(a, b)`
-* Create tests for the functions
+* Create the following files
+    * `example.py`
+        * ```python
+            def add(a, b):
+                return 0
+
+            def multiply(a, b):
+                return 0
+            ```
+    * `test_example.py`
+        * ```python
+            from example import *
+
+            def test_add():
+                assert add(1, 2) == 3
+                assert add(1, -2) == -1
+                assert add(1000000000000000000, 2) == 1000000000000000002
+
+            def test_multiply():
+                assert False, "please implement the rest of this test"
+            ```
+* Add some positive tests for these functions
     * Think about possible values to test with 
         * (positive? negative? BIG numbers?)
-        * add(2, "thing")
-* Advanced (optional)
+* Add some erroneous tests for these functions
+    * `add(2, "thing")` - you expect to generate an exception
+        * https://docs.pytest.org/en/latest/how-to/assert.html#assertions-about-expected-exceptions
+* Create a new function and some new test
     * Test for exceptions
     * `div(a, b)` -> `div(100, 0)`
-    * https://docs.pytest.org/en/6.2.x/assert.html#assertions-about-expected-exceptions
 
 
 ### Task: Testing `jsonplaceholder`
@@ -57,27 +110,36 @@ pip install pytest requests
 """
 Complete the pytest tests below for https://jsonplaceholder.typicode.com/guide/
 Test the endpoints by:
-1.) making a request using the `requests library`
-2.) Assert/Check/Verify some aspect of the data you get back is correct to the spec/examples
+* making a request using the `requests library`
+* Assert/Check/Verify some aspect of the data you get back is correct to the spec/examples
+* use `breakpoint()` and `dir(response)` to debug the response object to get the `status` somehow
 
-Hints:
+Hints (Components you will need - these are not in order):
 
     ITEM={"title": "foo", "body": "bar", "userId": "1"}
-    response = requests.post(ENDPOINT + '/posts', json=ITEM)
-
-    response = requests.get(???)
+    response = requests.post(ENDPOINT + 'posts', json=ITEM)
 
     data = response.json()
+
+    response = requests.delete(ENDPOINT + '???/???')
+
     assert data['id'] > 100
+
+    assert response.??? == 200
 """
 import requests
 
 ENDPOINT="https://jsonplaceholder.typicode.com/"
 
 def test_get_post_1():
+    response = requests.get(ENDPOINT + 'posts/1')
+    # Find out what the request should return with
+    # curl https://jsonplaceholder.typicode.com/posts/1
+    # Assert the right data is returned
     pass  # remove me
 
 def test_create_post():
+    # Post and item and assert the id created is greater than 100
     pass  # remove me
 
 def test_delete_post_1():
@@ -90,7 +152,7 @@ def test_delete_post_1():
     * `pip install pytest-html`
     * `pytest --html=report.html --self-contained-html`
 * view generated report
-    * `python3 -m http.server`
+    * `python3 -m http.server` or right-click + download
 * Advanced (Optional)
     * Create a `pytest.ini` file
     * ```ini
@@ -118,14 +180,20 @@ make run_local
 
 # -- separate terminal
 
-# Run tests
+# Run individual test
 cd test_server
-pytest test_api.py::test_items_has_posted_item
+pytest test_api.py::test_root
+# look for more test names in `test_server/test_api.py`
 ```
 
 ### Framework Features
 * Fixtures
+    * Setup and teardown for data
     * ```python
+        @pytest.fixture
+        def ENDPOINT():
+            yield "An object of some sort"
+
         @pytest.fixture
         def new_item(ENDPOINT):
             # create it before the test
@@ -142,9 +210,30 @@ pytest test_api.py::test_items_has_posted_item
 * PyTest by default creates hidden cache files.
     * `__pycache__`, `.pytest_cache`
     * DO NOT COMMIT THESE TO YOUR REPO!
-        * use `.gitignore`
+        * add these folder/files to `.gitignore`
     * Don't copy them when building containers (this can conflict with the container execution environment)
-        * use `.dockerignore`
+        * add these folders/files to `.dockerignore`
+
+
+Jasmine (Javascript)
+--------------------
+
+* https://jasmine.github.io/
+    * Look at the test example on the main page - note the similarities with `pytest` - all test have a name and perform some kind of assertion
+
+### Task: Let's try Jasmine
+
+* https://jasmine.github.io/setup/nodejs.html
+* ```bash
+    mkdir jasmine_example ; cd jasmine_example
+    npm install --save-dev jasmine
+    npx jasmine init
+    npx jasmine examples
+    npx jasmine
+    # look in jasmine_example/spec/jasmine_examples/PlayerSpec.js
+    ```
+
+
 
 Other UnitTest Frameworks
 -------------------------
@@ -167,6 +256,8 @@ Cypress (A Browser/End-to-End test Framework)
 -------
 
 * Demo full local cypress environment
+* Technical:
+    * The entire test suite runs in the browser in javascript - when finished it uploaded the results to the test orchestrator
 * Terminology: Headless
     * Does not need to run the renderer - much lighter memory footprint and less processor time
     * Caution: this it NOT the same as an actual browser with a user. There are edge cases it can miss
@@ -174,22 +265,30 @@ Cypress (A Browser/End-to-End test Framework)
 
 ### Task: Create a Cypress test to search with Google
 
-* Save as `cypress/integration/example.spec.js`
+* Setup (on gitpod without gui local - just an example) (normally you would run this heedlessly in containers)
+    * ```bash
+        mkdir cypress_test; cd cypress_test
+        sudo apt-get update && sudo apt-get install -y PASTE_DEPENDENCIES  # https://docs.cypress.io/guides/continuous-integration/introduction#Ubuntu-Debian
+        npm install cypress
+        cp ${GITPOD_REPO_ROOTS}/test_client/cypress.config.js .
+        ```
+* Save as `cypress/google.spec.cy.js`
 ```javascript
 describe('Google', () => {
     it('Search for university webpage and check university logo is present', () => {
-        cy.visit("https://www.google.com");
+        cy.visit("https://www.google.co.uk?&hl=en&lr=lang_en")
+            // * Hint: "Terms and Conditions" must be accepted - click the 'Accept All' button
         // * Perform a google search for canterbury christ church university (with a spelling mistake)
+            // type text into the right input box?
         // * Check that `canterbury.ac.uk` is somewhere in the returned list of searches
         // * Follow the google search link to the main university webpage and check the logo is visible
-
-        // * Hint: "Accept Cookie" buttons will block your way. Your test should deal with these
+            // * Hint: "Cookie Popup" will block your way. Your test should deal with these
     });
 });
 /*
 * Run with
-    * Local Headless: `npx cypress run --spec cypress/integration/google.spec.js`
-    * Container Headless: `make cypress_cmd CYPRESS_CMD="run --spec cypress/integration/example.spec.js"`
+    * Local Headless: `npx cypress run --spec cypress/google.spec.cy.js`
+    * Container Headless: `make cypress_cmd CYPRESS_CMD="run --spec cypress/example.spec.cy.js"`
 * https://docs.cypress.io/api/commands/
     * `.visit("https://site")`
     * `.contains("text on webpage")`
@@ -212,7 +311,9 @@ Other Browser/End-to-End test Frameworks
 
 https://www.selenium.dev/
 * Very established
-* What are the problems with the architecture
+* Technical
+    * The test orcestrator runs in (almost) any language and communicates with the browser via a special binary network binding called selenium-driver
+    * Each browser must install (at the system level) the special selenium driver
 
 ### puppeteer
 
@@ -220,6 +321,11 @@ https://developers.google.com/web/tools/puppeteer
 
 Googles own headless browser test
 
+
+Discussion: Selenium Vs Cypress
+--------------------------------
+
+Architecturally - which one would you choose and why?
 
 
 
@@ -235,15 +341,46 @@ Solutions
 =========
 
 <details>
+<summary>jsonplaceholder Solution</summary>
+
+```python
+import requests
+
+ENDPOINT="https://jsonplaceholder.typicode.com/"
+
+def test_get_post_1():
+    response = requests.get(ENDPOINT + 'posts/1')
+    data = response.json()
+    assert data == {'userId': 1, 'id': 1, 'title': 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit', 'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'}
+
+def test_create_post():
+    ITEM={"title": "foo", "body": "bar", "userId": "1"}
+    response = requests.post(ENDPOINT + 'posts', json=ITEM)
+    data = response.json()
+    assert data['id'] > 100
+
+def test_delete_post_1():
+    response = requests.delete(ENDPOINT + 'posts/1')
+    assert response.status_code == 200
+
+```
+</details>
+
+<details>
 <summary>Cypress Solution</summary>
 
-    cy.visit("https://www.google.com");
-    cy.contains("I agree").click();
-    cy.get('input[title="Search"]').type("canterbury christ chuch{enter}");
-    cy.contains("canterbury.ac.uk").click();
-    cy.get('#onetrust-accept-btn-handler').should('be.visible').click();
-    cy.get('img[alt="Canterbury Christ Church University Logo"]').should('be.visible');
-
+```javascript
+describe('Google', () => {
+	it('Search for university webpage and check university logo is present', () => {
+		cy.visit("https://www.google.co.uk?&hl=en&lr=lang_en")
+		cy.get('button').contains("Accept all").scrollIntoView().should('be.visible').click()
+		cy.get('input[title="Search"]').should('be.visible').type("Canterbury christ chcurch uni{enter}")
+		cy.contains("canterbury.ac.uk").click()
+		cy.get("#onetrust-accept-btn-handler").click()
+b		cy.get('img[alt="Canterbury Christ Church University Logo"]').should('be.visible')
+	});
+});
+```
 </details>
 
 <details>

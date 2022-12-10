@@ -10,10 +10,6 @@ Objectives
 4. Use a range of web frameworks to create a responsive page
 5. Understand that a range of frameworks exist
 
-Guidance on Assignment 2
-
-Next week: Test frameworks
-
 
 HTML Styles
 -----------
@@ -82,8 +78,12 @@ Refresher and some advanced features
 * ID - prefixed  with `#`
     * Only one
     * I tend to only use ID's when their is javascript interaction or associated code/behaviour
-* class - refixed with `.`
+* class - prefixed with `.`
     * Can be applied many times
+* css selectors can be joined with 
+    * ` ` (space) And child in tree
+    * `>` immediate child 
+    * more...
 
 ```html
 <!doctype html>
@@ -180,7 +180,9 @@ Add the css below and resize the browser to less than 600px.
 }
 ```
 
-[Challenge: Login Screen - CSS Transition](https://github.com/calaldees/TeachProgramming/tree/master/teachprogramming/static/projects/web/login)
+### TASK: Login Screen Transition (Challenge)
+
+* [Challenge: Login Screen - CSS Transition](https://github.com/calaldees/TeachProgramming/tree/master/teachprogramming/static/projects/web/login)
 
 
 Problems with CSS
@@ -221,10 +223,10 @@ Problems with CSS
     * You can slice by quarter and 3rd without fractions
 
 
-Bootstrap 5.1
+Bootstrap 5.2
 -------------
 
-* my example
+* my old example (bootstrap 4.x)
     * https://barcampcanterbury.com/
     * use dev-tools with mobile simulation
 
@@ -234,26 +236,26 @@ Bootstrap 5.1
     * Responsive
         * Mobile simulation in devtools
         * Resize window
-        * Breakpoints https://getbootstrap.com/docs/5.1/layout/breakpoints/
+        * Breakpoints https://getbootstrap.com/docs/5.2/layout/breakpoints/
             * sm, md, lg
         * Grid
-            * https://getbootstrap.com/docs/5.1/layout/grid/
+            * https://getbootstrap.com/docs/5.2/layout/grid/
             * 12 Column system (base 12 rocks!)
         * Utilities
             * Try not to write your own css where possible - use the framework tools
-            * https://getbootstrap.com/docs/5.1/utilities/spacing/
-            * https://getbootstrap.com/docs/5.1/utilities/borders/
+            * https://getbootstrap.com/docs/5.2/utilities/spacing/
+            * https://getbootstrap.com/docs/5.2/utilities/borders/
         * Cards
-            * https://getbootstrap.com/docs/5.1/components/card/
+            * https://getbootstrap.com/docs/5.2/components/card/
         * Navbar
-            * https://getbootstrap.com/docs/5.1/components/navbar/
+            * https://getbootstrap.com/docs/5.2/components/navbar/
             * fixed top?
         * Spinners - for loading
-            * https://getbootstrap.com/docs/5.1/components/spinners/
+            * https://getbootstrap.com/docs/5.2/components/spinners/
         * Forms
             * validation
-            * https://getbootstrap.com/docs/5.1/forms/validation/
-            * https://getbootstrap.com/docs/5.1/forms/floating-labels/
+            * https://getbootstrap.com/docs/5.2/forms/validation/
+            * https://getbootstrap.com/docs/5.2/forms/floating-labels/
         * Toast
         * ScrollSpy
     * [Icons](https://icons.getbootstrap.com/)
@@ -262,11 +264,11 @@ Bootstrap 5.1
     * [Examples](https://getbootstrap.com/docs/5.1/examples/)
 
 
-Icons
+### Bootstrap Icons Example
 * [Icons](https://icons.getbootstrap.com/)
-```
+```html
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -276,7 +278,7 @@ Icons
 ```
 
 ### Task
-Create the following
+Create the following website layout in Bootstrap.
 
 ```
 Navbar | Shopping basket + Game controller +  Dice
@@ -287,7 +289,7 @@ large breakpoint
 
 | section1 | section2 | section3 |
 
-| section4 | section5 | section5 |
+| section4 | section5 | section6 |
 
 medium breakpoint
 
@@ -295,7 +297,7 @@ medium breakpoint
 
 | section4                       |
 | section5                       |
-| section5                       |
+| section6                       |
 
 small breakpoint
 
@@ -304,7 +306,7 @@ small breakpoint
 | section3 |
 | section4 |
 | section5 |
-| section5 |
+| section6 |
 
 ---
 
@@ -313,68 +315,185 @@ A button
 
 ---
 
-3 Cards with placekitten images
+3 Cards with PlaceKitten images
 https://placekitten.com/
 
 ```
 ![Bootstrap preivew](./images/bootstrap_task_preview.gif)
 
+Use the documentation https://getbootstrap.com/docs/5.2/getting-started/introduction/
 
-Starting `index.html`
+Starting `index.html` boilerplate
 ```html
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <title>Bootstrap Demo</title>
-  </head>
-  <body>
+</head>
+<body>
 
     <nav class="navbar">
-        ??
+        Navbar | Shopping basket + Game controller +  Dice
     </nav>
 
     <div class="container my-3">
-        ??
+        6 Responsive Containers go here
     </div>
 
     <div class="container my-3">
-        ??
+        Form input with floating text for email and password
+        A button
+    </div>
+
+    <div class="container my-3">
+        3 Cards with PlaceKitten images
+    </div>
+
+</body>
+</html>
+```
+
+<details>
+
+```html
+    <!-- https://getbootstrap.com/docs/5.2/components/navbar/#nav -->
+    <!-- https://icons.getbootstrap.com/ -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-github"></i>Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="bi bi-controller"></i>Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="bi bi-dice-3"></i>Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled"><i class="bi bi-basket"></i>Disabled</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+
+    <div class="container my-3">
+
+        <!-- https://getbootstrap.com/docs/5.2/layout/grid/#mix-and-match -->
+        <div class="row">
+            <div class="col-md-4">
+            section1
+            </div>
+            <div class="col-md-4">
+            section2
+            </div>
+            <div class="col-md-4">
+            section3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+            section4
+            </div>
+            <div class="col-lg-4">
+            section5
+            </div>
+            <div class="col-lg-4">
+            section6
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container my-3">
+        <!-- https://getbootstrap.com/docs/5.2/forms/form-control/#example -->
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Full Name">
+          </div>
+          
+        <div class="mb-3">
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <!-- https://getbootstrap.com/docs/5.2/components/buttons/#examples -->
+        <button type="button" class="btn btn-primary">Submit</button>
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  </body>
-</html>
+    <div class="container my-3">
+        <!-- https://getbootstrap.com/docs/5.2/components/card/#example -->
+        <div class="card" style="width: 18rem;">
+            <img src="https://placekitten.com/408/287" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+    </div>
+
 ```
+</details>
 
 Skeleton
 --------
 
 * http://getskeleton.com
-* A dead simple, responsive boilerplate
-* Light as a feather at ~400 lines & built with mobile in mind
-* Styles designed to be a starting point, not a UI framework
-* Quick to start with zero compiling or installing necessary
+    * > A dead simple, responsive boilerplate
+    * > Light as a feather at ~400 lines & built with mobile in mind
+    * > Styles designed to be a starting point, not a UI framework
+    * > Quick to start with zero compiling or installing necessary
 
-* Only one breakpoint (to start with)
-* Very very lightweight demo
+* Only one small breakpoint (to start with)
+* [Example responsive landing page](http://getskeleton.com/examples/landing/) 
 
+### TASK - Try Skeleton
+
+With boilerplate below
+
+```html
+<html>
+<head>
+    <title>Skeleton Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+</head>
+<body>
+
+<!-- bit of my css to help view grid -->
+<style>.example-grid .column, .example-grid .columns {background-color: lightgray;}</style>
+<div class="container example-grid">
+
+    <!-- Copy and Paste examples from http://getskeleton.com -->
+
+</div>
+
+</body>
+</html>
+```
 
 tailwindcss
 -----------
 
 * [tailwindcss](https://tailwindcss.com/)
-    * Rapidly build modern websites without ever leaving your HTML.
+    * > Rapidly build modern websites without ever leaving your HTML.
     * [Utility First](https://tailwindcss.com/docs/utility-first)
 
 * My opinion
     * Great when used with a client framework with reusable components
     * Templates become very verbose and bloated - hard to read
-    * `@apply` could solve some of this, but requires css compilation framework
+    * [@apply](https://tailwindcss.com/docs/reusing-styles#extracting-classes-with-apply) could solve some of this, but requires css compilation framework
 
 ```html
 <!doctype html>
@@ -382,24 +501,17 @@ tailwindcss
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- From: https://tailwindcss.com/docs/installation#using-tailwind-via-cdn -->
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script><!-- https://tailwindcss.com/docs/installation/play-cdn -->
 </head>
 <body>
 
-    <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-        <div class="flex-shrink-0">
-            <img class="h-12 w-12" src="/img/logo.svg" alt="ChitChat Logo">
-        </div>
-        <div>
-            <div class="text-xl font-medium text-black">ChitChat</div>
-            <p class="text-gray-500">You have a new message!</p>
-        </div>
-    </div>
-
+    <!-- https://tailwindcss.com/docs/utility-first -->
+    <!-- Copy examples -->
 
 </body>
 </html>
+
 ```
 
 * padding `p-??` and margin `m-??` 
@@ -410,12 +522,17 @@ https://tailwindcss.com/docs/divide-width#add-borders-between-horizontal-childre
 
 Forms is not part of default functionality - requires plugin
 
+* [Example of tailwind and react together](https://github.com/gentabelardi/search-app/blob/595a66eafa2992a0c2c4458c954433b50b6899fc/components/atoms/Input/index.tsx#L79)
+    * Discussion - why is this a popular model? - What problem is react+tailwind solving?
+
 
 Pure.css
 --------
-https://purecss.io/
-* see getting started and grid system
-* Pure ships with both a 5ths and 24ths based grid
+* [Pure.css](https://purecss.io/)
+    * > A set of small, responsive CSS modules that you can use in every web project.
+    * [Introduction to Pure Grids](https://purecss.io/grids/)
+        * > Pure ships with both a 5ths and 24ths based grid
+    * Strength: Has template [layouts](https://purecss.io/layouts/)
 
 Bit more than skeleton but still pretty bare bones
 
@@ -424,11 +541,15 @@ Material Design (Google)
 ------------------------
 
 * [materializecss](https://materializecss.com/about.html)
+    * See "Material Design" video
     * > A modern responsive front-end framework based on Material Design
     * Motion provides meaning + colour
     * [Material Design](https://material.io/)
         * [Material Icons](https://fonts.google.com/icons) searchable
         * [Googled tried to enforce Material Design on iOS platforms](https://sixcolors.com/link/2021/10/googles-apps-to-embrace-ios-on-ios/) they gave up in 2021 because (quite rightly) the users were annoyed and confused
+    * examples
+        * [buttons](https://materializecss.com/buttons.html)
+        * more
 
 
 Other Projects
@@ -446,6 +567,7 @@ Other Addons
 * [AutoAnimate](https://auto-animate.formkit.com/) -  Add motion to your apps with a single line of code. 
     * LI swap, add, delete
 
+
 Further Reading
 ---------------
 
@@ -453,19 +575,3 @@ Further Reading
 * [Top 5 CSS Frameworks for Website Developers and Designers](https://www.browserstack.com/guide/top-css-frameworks)
 * [10 CSS Pro Tips - Code this, NOT that!](https://www.youtube.com/watch?v=Qhaz36TZG5Y) 10min Video
     * Understand the power of raw CSS without being locked into framework
-
-
-Guidance with Assignment 2
-==========================
-
-Time to start your server and client implementations.
-* Clone the repo
-* Make commits
-* You will submit a repo for me to run your project
-* I will details how you will submit your repo over the next few weeks
-* Build you server in `server/`
-* Make a `Dockerfile` to ensure your server can be run from a container
-* Run test on your sever `make test_server`
-
-Missing from last week
-* Demo accessing API form javascript (as this failed last week) 

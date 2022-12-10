@@ -4,32 +4,35 @@
     <meta charset="utf-8" />
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
     <title>Vue.js Test</title>
+    <!-- See Makefile for complete local run rather than cdn <script src="vue.global.js"></script> -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> <!-- https://vuejs.org/guide/quick-start.html#using-vue-from-cdn -->
     <style>
-        
+        /* -- Style -- */
     </style>
-    <script src="https://unpkg.com/vue@next"></script> <!-- https://v3.vuejs.org/guide/installation.html#cdn -->
 </head>
 <body>
     <h1>Vue.js Test</h1>
 
-    <!-- 
-        Vue.js - Introduction
-        https://v3.vuejs.org/guide/introduction.html#declarative-rendering 
-    -->
-    <div id="counter">
-        Counter: {{ counter }}
+    <!-- Approximation of SingleFileComponent `.vue` within an html boilerplate https://vuejs.org/guide/introduction.html#single-file-components -->
+    <!-- copy/paste from https://vuejs.org/guide/introduction.html#what-is-vue -->
+
+    <!-- Template -->
+    <div id="app">
+      <button @click="count++">
+        Count is: {{ count }}
+      </button>
     </div>
-      
+
+    <!-- Script -->
     <script type="module">
-        const Counter = {
+        const { createApp } = Vue
+        createApp({
             data() {
                 return {
-                    counter: 0,
+                    count: 0
                 }
             }
-        }
-
-        Vue.createApp(Counter).mount('#counter')
+        }).mount('#app')
     </script>
 </body>
 </html>

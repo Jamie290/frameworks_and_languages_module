@@ -56,8 +56,10 @@ cypress_cmd:
 
 run_example_client_with_your_server:  ##
 	${DOCKER_COMPOSE} --file docker-compose.example.client.yml up --build
+	${DOCKER_COMPOSE} --file docker-compose.example.client.yml down
 run_your_client_with_example_server:  ##
 	${DOCKER_COMPOSE} --file docker-compose.example.server.yml up --build
+	${DOCKER_COMPOSE} --file docker-compose.example.server.yml down
 test_your_client_with_example_server:  ##
 	${DOCKER_COMPOSE_TEST} --file docker-compose.example.server.yml up --build test_client
 	${DOCKER_COMPOSE_TEST} down
