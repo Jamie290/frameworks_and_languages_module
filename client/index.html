@@ -54,7 +54,12 @@
     <li><!-- Somehow templated for each item -->
         <img src="item.image">
         <span data-field="id">{{item.id}}</span>
-        <span data-field="lat">??? item.lat ???</span>
+        <span data-field="User_id">{{item.user_id}}</span>
+        <span data-field="Latitude">{{item.lat}}</span>
+        <span data-field="Longitude">{{item.lon}}</span>
+        <span data-field="Keywords">{{item.keywords}}</span>
+        <span data-field="Description">{{item.description}}</span>
+        <span data-field="Date">{{item.date_from}}</span>
         ...
         <button data-action="delete" someKindOfOnClickAction="deleteItem(item.id)">Delete</button>
     </li>
