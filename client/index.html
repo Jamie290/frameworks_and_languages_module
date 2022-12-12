@@ -2,29 +2,34 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
-    <title>FreeCycle</title>
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />  <!-- base 64 encoded image apart of html at the tab, so webpage doesn't look for that file -->
+    <title>FreeCycle</title> <!-- Title of tab -->
     <style>
 
     /* styles here */
 
     </style>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> <!-- Loading global build of Vue to allow me to use it  -->
 </head>
-<body>
-   
-    <h1>FreeCycle</h1>
+<body style="background-color:rgb(200, 209, 211);">
+    <div class="title-bar">
+        <div class="title-bar-left">
+          <span class="title-bar-title">
+            <h1>FreeCycle</h1>
+        </span>
+    </div>
+  </div>
 
     <!-- html here -->
-
+<!--   -->
  <div id="app">
-    {{ message }}
-    <form @submit.prevent="addItem">
-        <div class="form-group"></div>
+   <!-- {{ message }}  --> 
+    <form @submit.prevent="clear_item"> <!-- prevents website from refreshing  -->
+        <div class="form-group"></div>  <!-- encourages proper grouping of labels, controls, optional help text, and form validation messaging.  -->
             <label for="user_id">UserName : </label>
             <input class="form-control" name="user_id" placeholder="user_id">
         
-        <div class="form-group"></div>
+        <div class="form-group"></div> 
             <label for="lat">lat : </label>
             <input class="form-control" name="lat" placeholder="lat">
 
@@ -43,7 +48,7 @@
         <div class="form-group"></div>
             <label for="Description">Description : </label>
             <textarea class="form-control" name="description" placeholder="description" rows="3"></textarea>
-        <button data-action="addItem">Create Item</button>
+        <button data-action="clear_item">Create Item</button>
     </form>
 
 
@@ -69,26 +74,92 @@
     // javascript here
 
 
-  
-const { createApp } = Vue
 
-createApp({
-    data() {
+const { createApp } = Vue 
+
+const DEFAULT_API = '/api/v1';  // default to current http(s)://currentHost:currentPort/api/v1'
+	const urlParams = new URLSearchParams(window.location.search);
+	const urlAPI = (urlParams.get('api') || DEFAULT_API).replace(/\/$/, '');  // Get api url (and remove trailing slash if present)
+
+createApp({     //creating application
+    data() { //our state
       return {
-        message: 'Hello Vue!'
-      }
-    },
-    methods: { 
-        addItem() {
-            console.log("addItem")
-
+        //when an item is inputted it create a new item
+          item: { 
+            id:'',
+            user_id:'',
+            keywords:'',
+            lat:'',
+            lon:'',
+            image:'',
+            date_from:'',
+            description:'',
+          },
+          //Lists of the items
+          items:[],
+        
         }
 
-    }
-
+    },
+    
+   
+    methods: { 
+        clear_item(){
+            console.log("hello")
+            /*
+            this.item= { ...this.item, ...{
+            user_id:'',
+            keywords:'',
+            lat:'',
+            lon:'',
+            image:'',
+            description:'',}}
+            */
+        },
+    },
 }).mount('#app')
+
+
+      /*
+        getItems() {
+        fetch(`${urlAPI}/items`, {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log("getItems", json)
+                items = json  // save the json we got back into the variable `items`
+            })
+        .catch(err => console.error(err))
+    },
+    createItem(data) {
+            // Posts the item that was submitted from form to Server
+			//Clears all the inputs
+			//Gets the items that were posted to server
+        fetch(`${urlAPI}/item`, { //going to item endpoint 
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data), //converts a JavaScript value to a JSON string
+        })
+          .then(response => response.json()) //decoding json response
+          .then(json => console.log('createItems()', json)) //return items back from server to user
+        .catch(err => console.error(err)); 
+    },
+
+    deleteItem(item_id) {
+        fetch(`${urlAPI}/item/${item_id}`, {
+            method: 'DELETE',
+        })
+        .then(json => console.log('deleteItem()', json))
+        .catch(err => console.error(err));
+    }.mount('#app') //attaching data to app
+*/
+
 
 
 </script>
 </body>
 </html>
+
+<!-- References  -->
+<!-- https://getbootstrap.com/docs/4.0/components/forms/   -->

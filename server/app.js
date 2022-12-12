@@ -10,14 +10,14 @@ app.use(bodyParser.urlencoded({ extended: true })) //allows specific access to n
 app.use(cors()) //https://expressjs.com/en/resources/middleware/cors.html
 app.use(express.json()); // Enable json input from incoming requests. 
 
-app.use((req, res, next) => { //ensures we prevent cors errors
-res.header('Access-Control-Allow-Origin', '*'); // allows the response from one website to a request originating from another website, and identifies the permitted origin of the request
-res.header('Access-Control-Allow-Headers', '*'); //defines which type headers we want to accept along with request
-if(req.method == 'OPTIONS') {
-  res.header('Access-Control-Allow-Methods', 'POST','GET','OPTIONS','DELETE'); //Make sure my methods are all the HTTP requests i want to run with the API
-  return res.status(204).json({});
-}
-})
+//app.use((req, res, next) => { //ensures we prevent cors errors
+//res.header('Access-Control-Allow-Origin', '*'); // allows the response from one website to a request originating from another website, and identifies the permitted origin of the request
+//res.header('Access-Control-Allow-Headers', '*'); //defines which type headers we want to accept along with request
+//if(req.method == 'OPTIONS') {
+ // res.header('Access-Control-Allow-Methods', 'POST','GET','OPTIONS','DELETE'); //Make sure my methods are all the HTTP requests i want to run with the API
+  //return res.status(204).json({});
+//}
+//})
 function logErrors (err, req, res, next) { //https://expressjs.com/en/guide/error-handling.html
   console.error(err.stack) //catch errors
   next(err)
@@ -27,7 +27,9 @@ app.use(logErrors)
 // Routes 
 app.get('/', (req, res) => {
   res.sendFile('index.html', {root: __dirname})
-})
+  console.log("hello")
+  res.send("hello")
+})//modify server.js to render index.html  
 
 var ITEMS = {
   1: {
@@ -54,13 +56,13 @@ var ITEMS = {
 
 
 app.post('/item', (req,res) => {
-  var idNew = Object.keys(ITEMS).length  + 1
-  var date = new Date().toJSON().slice(0,10)
-  if(ITEMS.hasOwnProperty(idNew)){
+  var idNew = Object.keys(ITEMS).length  + 1 // gets length of items and increments it
+  var date = new Date().toJSON().slice(0,10) // creates date
+  if(ITEMS.hasOwnProperty(idNew)){ // 
     idNew = idNew + 1
   }
   if(req.body.user_id && req.body.keywords && req.body.description 
-    && req.body.lat && req.body.lon !== ""){
+    && req.body.lat && req.body.lon !== ""){ //checks if fields are not empty
     ITEMS[idNew] = {
       id: idNew,
       user_id: req.body.user_id,
@@ -86,21 +88,14 @@ app.get('/', (req, res) => {
   return res.status(200).json('<html><body>Welcome</body></html>')
 }) 
 
-app.get('/items' ,(req,res)=>{
-  if(req.query.user_id)
-  {
-    res.status(200).json(Object.values(ITEMS).filter(i  => i.user_id == req.query.user_id))
-    return;
-  }
-  res.status(200).json(Object.values(ITEMS))
-})
+
 
 app.get('/items', (req, res) => {
     var New= []
-    for (let [retrieve, objectValues] of Object.entries(ITEMS)) {
-        New.push(objectValues);
+    for (let [retrieve, objectValues] of Object.entries(ITEMS)) { // Retrieve the items
+        New.push(objectValues); //push items into variable
     }
-    if(Object.keys(New).length <= 0){
+    if(Object.keys(New).length <= 0){ //if no items were retrieved
     res.status(204).send('Error: 204 - No Items found.');
     }
     else{
@@ -108,10 +103,19 @@ app.get('/items', (req, res) => {
     }
 })
 
+app.get('/item/:id', (req,res) => { 
+  if(ITEMS[req.params.id] === undefined){ // If ID does not exist, returns "Item not found"
+    res.status(404).json("Item not found")
+}
+else{ // If Item with matching ID exists, returns the Item
+    res.status(200).json(ITEMS[req.params.id])
+}
+})
+
 app.delete('/item/:id', (req,res) => { 
-  var idNew = parseInt(req.params.idNew)
-  if(ITEMS.hasOwnProperty(idNew)){
-    delete(ITEMS[idNew])
+  var ITEMid = parseInt(req.params.id) 
+  if(ITEMS.hasOwnProperty(ITEMid)){ //
+    delete(ITEMS[ITEMid]) //
     res.status(204).send("Ok")
   }
   else{
@@ -123,6 +127,8 @@ app.use(cors({
   origin: "http://localhost:8000/",
   methods: ['POST','GET','OPTIONS','DELETE'],
 }));
+
+app.use('*', cors())
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
