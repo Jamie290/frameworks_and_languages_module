@@ -377,9 +377,9 @@ describe('Google', () => {
 		cy.get('input[title="Search"]').should('be.visible').type("Canterbury christ chcurch uni{enter}")
 		cy.contains("canterbury.ac.uk").click()
 		cy.get("#onetrust-accept-btn-handler").click()
-b		cy.get('img[alt="Canterbury Christ Church University Logo"]').should('be.visible')
-	});
-});
+		cy.get('img[alt="Canterbury Christ Church University Logo"]').should('be.visible')
+	})
+})
 ```
 </details>
 

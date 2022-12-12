@@ -1,6 +1,6 @@
 services:
   test_client:
-    image: cypress/included:10.3.1
+    image: cypress/included:11.2.0
     working_dir: /tests
     volumes:
       # USER passthrough
