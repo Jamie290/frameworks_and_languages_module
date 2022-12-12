@@ -27,8 +27,8 @@ app.use(logErrors)
 // Routes 
 app.get('/', (req, res) => {
   res.sendFile('index.html', {root: __dirname})
-  console.log("hello")
-  res.send("hello")
+  console.log("FreeCycle")
+  
 })//modify server.js to render index.html  
 
 var ITEMS = {
@@ -56,9 +56,9 @@ var ITEMS = {
 
 
 app.post('/item', (req,res) => {
+ /* console.log(request.body)
   var idNew = Object.keys(ITEMS).length  + 1 // gets length of items and increments it
-  var date = new Date().toJSON().slice(0,10) // creates date
-  if(ITEMS.hasOwnProperty(idNew)){ // 
+  if(ITEMS.hasOwnProperty(idNew)){ 
     idNew = idNew + 1
   }
   if(req.body.user_id && req.body.keywords && req.body.description 
@@ -71,15 +71,27 @@ app.post('/item', (req,res) => {
       image: req.body.image,
       lat: req.body.lat,
       lon: req.body.lon,
-      date_from: date ,
-      date_to: date }
+      date_from: new Date().toISOString().slice(0, 10) ,
+      date_to: new Date().toISOString().slice(0, 10) }
 
-      res.status(201).json(ITEMS[idNew]) 
-  }
-      else {
-        res.status(405).json('Missing field')
+      res.status(201).json(ITEMS[idNew]) */
+      if (!req.body.user_id || !req.body.description || !req.body.keywords || !req.body.lat || !req.body.lon) //check for required fields
+      {
+        return res.status(405).json({message: 'there is missing fields'})
       }
-    })
+      else{
+      ID=  Math.max( ...Object.keys(ITEMS)) +1; //find the max id 
+      if(ID == "-Infinity"){
+        ID= 0
+      }
+      req.body.id=ID;
+      req.body.date_from= new Date().toISOString().slice(0, 10) // https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
+      ITEMS[ID]=req.body; 
+      res.status(201).json(ITEMS[ID])
+      console.log(ITEMS[ID])
+    }
+  })
+        
 
 
 

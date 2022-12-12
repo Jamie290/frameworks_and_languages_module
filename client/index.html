@@ -11,7 +11,7 @@
     </style>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> <!-- Loading global build of Vue to allow me to use it  -->
 </head>
-<body style="background-color:rgb(200, 209, 211);">
+<body style="background-color:rgb(211, 239, 242);">
     <div class="title-bar">
         <div class="title-bar-left">
           <span class="title-bar-title">
@@ -24,31 +24,31 @@
 <!--   -->
  <div id="app">
    <!-- {{ message }}  --> 
-    <form @submit.prevent="clear_item"> <!-- prevents website from refreshing  -->
+    <form @submit.prevent="create_item"> <!-- prevents website from refreshing  -->
         <div class="form-group"></div>  <!-- encourages proper grouping of labels, controls, optional help text, and form validation messaging.  -->
             <label for="user_id">UserName : </label>
-            <input class="form-control" name="user_id" placeholder="user_id">
+            <input v-model="items.user_id" class="form-control" name="user_id" placeholder="Enter User ID"><br>
         
         <div class="form-group"></div> 
             <label for="lat">lat : </label>
-            <input class="form-control" name="lat" placeholder="lat">
+            <input v-model="items.lat" class="form-control" name="lat" placeholder="0"><br>
 
         <div class="form-group"></div>
             <label for="lon">lon : </label>
-            <input class="form-control" name="lon" placeholder="lon">
+            <input v-model="item.lon" class="form-control" name="lon" placeholder="0"><br>
 
         <div class="form-group"></div>
             <label for="image">image : </label>
-            <input class="form-control" name="image" placeholder="image">
+            <input v-model="item.image" class="form-control" name="image" placeholder="image"><br>
 
         <div class="form-group"></div>
             <label for="keywords">Keywords : </label>
-            <input class="form-control" name="keywords" placeholder="keywords">
+            <input v-model="item.keywords" class="form-control" name="keywords" placeholder="keywords"><br>
         
         <div class="form-group"></div>
             <label for="Description">Description : </label>
-            <textarea class="form-control" name="description" placeholder="description" rows="3"></textarea>
-        <button data-action="clear_item">Create Item</button>
+            <input v-model="item.description" textarea class="form-control" name="description" placeholder="description" rows="3"></textarea><br>
+        <button data-action="create_item">Create Item</button>
     </form>
 
 
@@ -66,7 +66,7 @@
         <span data-field="Description">{{item.description}}</span>
         <span data-field="Date">{{item.date_from}}</span>
         ...
-        <button data-action="delete" someKindOfOnClickAction="deleteItem(item.id)">Delete</button>
+        <button data-action="delete_item" someKindOfOnClickAction="delete_item(item.id)">Delete</button>
     </li>
 </ul>
 <script type="module">
@@ -78,9 +78,11 @@
 const { createApp } = Vue 
 
 const DEFAULT_API = '/api/v1';  // default to current http(s)://currentHost:currentPort/api/v1'
-	const urlParams = new URLSearchParams(window.location.search);
-	const urlAPI = (urlParams.get('api') || DEFAULT_API).replace(/\/$/, '');  // Get api url (and remove trailing slash if present)
-
+const urlParams = new URLSearchParams(window.location.search);
+const urlAPI = (urlParams.get('api') || DEFAULT_API).replace(/\/$/, '');  // Get api url (and remove trailing slash if present)
+//https://8000-jamie290-frameworksandl-tfunfby5sru.ws-eu78.gitpod.io/
+console.log("This is the urlAPI:",urlAPI) 
+    
 createApp({     //creating application
     data() { //our state
       return {
@@ -99,14 +101,14 @@ createApp({     //creating application
           items:[],
         
         }
-
     },
-    
+    created(){
+        this.clear_item()
+        this.get_items()
+      },
    
     methods: { 
         clear_item(){
-            console.log("hello")
-            /*
             this.item= { ...this.item, ...{
             user_id:'',
             keywords:'',
@@ -114,47 +116,45 @@ createApp({     //creating application
             lon:'',
             image:'',
             description:'',}}
-            */
+            
         },
-    },
-}).mount('#app')
 
-
-      /*
-        getItems() {
-        fetch(`${urlAPI}/items`, {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(json => {
-                console.log("getItems", json)
-                items = json  // save the json we got back into the variable `items`
+        get_items() {
+            fetch(`${urlAPI}/items`, {
+                method: 'GET',
             })
-        .catch(err => console.error(err))
-    },
-    createItem(data) {
+                .then(response => response.json())
+                .then(data => this.items=data)// save the json we got back into the variable `items`
+            .catch(err => console.error(err))
+        },
+   
+        create_item(data) {
             // Posts the item that was submitted from form to Server
 			//Clears all the inputs
 			//Gets the items that were posted to server
-        fetch(`${urlAPI}/item`, { //going to item endpoint 
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data), //converts a JavaScript value to a JSON string
-        })
-          .then(response => response.json()) //decoding json response
-          .then(json => console.log('createItems()', json)) //return items back from server to user
-        .catch(err => console.error(err)); 
+            fetch(`${urlAPI}/item`, { //going to item endpoint 
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data), //converts a JavaScript value to a JSON string
+            })
+            .then(response => response.json()) //decoding json response
+            .then(json => console.log('create_item()', json)) //return items back from server to user
+            .then(this.clear_item)
+            .then(this.get_items)
+            .catch(err => console.error(err)); 
+        },
+        
+        delete_item(item_id) {
+            fetch(`${urlAPI}/item/${item_id}`, {
+                method: 'DELETE',
+            })
+            .then(json => console.log('delete_item()', json))
+            .then(this.get_ITEMS)
+            .catch(err => console.error(err));
+    }
+
     },
-
-    deleteItem(item_id) {
-        fetch(`${urlAPI}/item/${item_id}`, {
-            method: 'DELETE',
-        })
-        .then(json => console.log('deleteItem()', json))
-        .catch(err => console.error(err));
-    }.mount('#app') //attaching data to app
-*/
-
+}).mount('#app')
 
 
 </script>
