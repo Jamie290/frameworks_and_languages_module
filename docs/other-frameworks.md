@@ -156,6 +156,10 @@ Server State Frameworks
 ### Phoenix LiveView (Elixir)
 * [Phoenix.LiveView behaviour](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html) 
     * > LiveView provides rich, real-time user experiences with server-rendered HTML
+### Dream
+* [Dream](https://github.com/aantron/dream) [docs](https://aantron.github.io/dream/) - Tidy Web framework for OCaml and ReasonML 
+    * > Easy-to-use, feature-complete Web framework without boilerplate.
+    * SQL, WebSockets, Middleware, Streams, Cookies
 
 Question: What problem is the 'DREAM' pattern trying to solve?
 

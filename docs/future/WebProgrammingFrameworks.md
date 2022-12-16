@@ -1,6 +1,8 @@
 Programming Frameworks
 ======================
 
+Level 6
+
 Description
 -----------
 
@@ -14,6 +16,13 @@ This course strengthen students' core technical ability of Web application syste
 
 Learning Goals
 --------------
+
+1. Use a range of frameworks and languages in a range of different problem domains to solve a problem to a formal specification
+2. Identify a range of framework/language features and describe the problems the technologies are trying to solve using technical language
+3. Engage with professional industry developer tooling, including: containers, continuous integration and automated test frameworks
+
+
+### Expanded
 
 1. Understand that modern web applications are often split into multiple components (backend, frontend)
 2. Independently select a variety frameworks solve a business problem/specification
@@ -31,8 +40,9 @@ Learning Goals
 Learning and Teaching Strategies
 --------------------------------
 
-* The module will be taught in a lab using mixed mode delivery as required, so that theory, practical and discussion can take place as required within one session.
-* Students will demonstrate progress in their assignment and will have the opportunity to gain feedback of their understanding in each session through the artefacts they are working on. 
+* The module will be taught in a lab using mixed mode delivery as required, so that theory, practical and discussion can take place as required within one session
+* Students will demonstrate progress in their assignment and will have the opportunity to gain feedback of their understanding in each session through the artefacts they are working on
+* Automated tests (via industry CI tools) are to be used to give students feedback on their implementation progress
 
 
 Indicative Assessment 
