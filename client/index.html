@@ -10,14 +10,23 @@
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />  <!-- base 64 encoded image apart of html at the tab, so webpage doesn't look for that file -->
     <title>FreeCycle</title> <!-- Title of tab -->
     <style>
-         body{
-    font-family: 'Roboto', sans-serif; 
-  }
+        @import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+        h1 {
+            color: #3f5fc8;
+            padding: 20px;
+            font-family: 'Monoton', cursive;
+        } 
+        
+        body{
+            font-family: 'Roboto', sans-serif; 
+        }
+
  
  
     /* styles here */
 
     </style>
+    
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> <!-- Loading global build of Vue to allow me to use it  -->
 </head>
 <body style="background-color:rgb(211, 239, 242);">
@@ -84,7 +93,7 @@
 
 const { createApp } = Vue 
 
-const DEFAULT_API = '/api/v1';  // default to current http(s)://currentHost:currentPort/api/v1'
+const DEFAULT_API = 'https://8000-jamie290-frameworksandl-tfunfby5sru.ws-eu78.gitpod.io';  // default to current http(s)://currentHost:currentPort/api/v1'
 const urlParams = new URLSearchParams(window.location.search);
 const urlAPI = (urlParams.get('api') || DEFAULT_API).replace(/\/$/, '');  // Get api url (and remove trailing slash if present)
 //?api=https://8000-jamie290-frameworksandl-tfunfby5sru.ws-eu78.gitpod.io/
@@ -143,17 +152,15 @@ createApp({     //creating application
             .then(this.get_items)  // Get the updated list of items from the server
             .then(this.clear_item)  // Clear input fields   
             .catch(err => console.error(err)); 
-        }, /*
+        }, 
         get_items() {
             fetch(`${urlAPI}/items`, {
                 method: 'GET',
             })
-                .then(response => response.json())
-                .then(data => this.items=data)// save the json we got back into the variable `items`
+            .then(response => response.json())
+            .then(data => this.items=data)// save the json we got back into the variable `items`
             .catch(err => console.error(err))
-        },*/
-   
-        
+        },
         
         delete_item(item_id) {
             fetch(`${urlAPI}/item/${item_id}`, {
