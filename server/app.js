@@ -5,10 +5,12 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 
 
-//app.use(express.urlencoded({ extended: false }));// To parse URL encoded data
+app.use(express.urlencoded({ extended: false }));// To parse URL encoded data
 app.use(bodyParser.json()) //installing body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true })) //allows specific access to nested property of req.body
-app.use(cors()) //https://expressjs.com/en/resources/middleware/cors.html
+app.use(cors({
+  methods: ['GET','POST','DELETE','OPTIONS']
+})) //https://expressjs.com/en/resources/middleware/cors.html
 app.use(express.json()); // Enable json input from incoming requests. 
 
 
@@ -17,10 +19,6 @@ function logErrors (err, req, res, next) { //https://expressjs.com/en/guide/erro
   next(err)
 }
 app.use(logErrors)
-
-app.get('/', (req, res) => {
-  return res.status(200).json('<html><body>Welcome</body></html>')
-}) 
 
 
 var ITEMS = {
@@ -46,6 +44,9 @@ var ITEMS = {
 }
 }
 
+app.get('/', (req, res) => {
+  return res.status(200).json('<html><body>Welcome</body></html>')
+}) 
 
 app.post('/item', (req,res) => {
  /* console.log(request.body)
@@ -67,16 +68,17 @@ app.post('/item', (req,res) => {
       date_to: new Date().toISOString().slice(0, 10) }
 
       res.status(201).json(ITEMS[idNew]) */
-      if (!req.body.user_id || !req.body.description || !req.body.keywords || !req.body.lat || !req.body.lon) //check for required fields
+      
+      if (!req.body.user_id ||  !req.body.lat  || !req.body.lon || !req.body.description || !req.body.keywords ) //check for required fields
       {
-        return res.status(405).json({message: 'there is missing fields'})
+        return res.status(405).json({message: 'missing fields required'})
       }
       else{
-      ID=  Math.max( ...Object.keys(ITEMS)) +1; //find the max id 
+      ID=  Math.max( ...Object.keys(ITEMS)) +1; // This will find the highest ID so we can go to the nxt number
       if(ID == "-Infinity"){
         ID= 0
       }
-      req.body.id=ID;
+      req.body.id=ID; //request id
       req.body.date_from= new Date().toISOString().slice(0, 10) // https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
       //slice changes contents of original array
       ITEMS[ID]=req.body; 
@@ -97,7 +99,7 @@ app.get('/items', (req, res) => {
       Object.values(ITEMS))
     }) */
 
-
+/*
 app.get('/items', (req, res) => {
     var New= []
     for (let [retrieve, objectValues] of Object.entries(ITEMS)) { // Retrieve the items
@@ -109,8 +111,20 @@ app.get('/items', (req, res) => {
     else{
     res.status(200).json(New)
     }
-})
+}) */
 
+// Filtering username 
+app.get('/items', (req,res)=> {
+  if (req.query.user_id){
+    res.status(200).json(Object.values(ITEMS).filter(obj => obj.user_id == req.query.user_id)) // using object.values as it is filtering through the values from ITEMS
+    return;
+  }
+  res.status(200).json(Object.values(ITEMS))
+})
+  
+app.get('/items', (req, res) => {
+    res.send(ITEMS)
+})
 
 
 app.get('/item/:id', (req,res) => { 
@@ -138,6 +152,8 @@ app.use(cors({
   methods: ['POST','GET','OPTIONS','DELETE'],
 }));
 
+
+
 app.use('*', cors())
 
 app.listen(port, () => {
@@ -149,3 +165,4 @@ process.on('SIGINT', function() {process.exit()})
 //References
 //https://www.youtube.com/watch?v=zoSJ3bNGPp0 "(Handling CORS errors and body parsing)"
 //https://stackoverflow.com/questions/52775844/log-request-method-on-routing 
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
