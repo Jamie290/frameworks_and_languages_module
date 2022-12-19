@@ -123,3 +123,5 @@ process.on('SIGINT', function() {process.exit()})
 //https://www.youtube.com/watch?v=zoSJ3bNGPp0 "(Handling CORS errors and body parsing)"
 //https://stackoverflow.com/questions/52775844/log-request-method-on-routing 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+//https://github.com/calaldees/frameworks_and_languages_module
+//https://vuejs.org/tutorial
