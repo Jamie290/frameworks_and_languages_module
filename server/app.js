@@ -49,25 +49,6 @@ app.get('/', (req, res) => {
 }) 
 
 app.post('/item', (req,res) => {
- /* console.log(request.body)
-  var idNew = Object.keys(ITEMS).length  + 1 // gets length of items and increments it
-  if(ITEMS.hasOwnProperty(idNew)){ 
-    idNew = idNew + 1
-  }
-  if(req.body.user_id && req.body.keywords && req.body.description 
-    && req.body.lat && req.body.lon !== ""){ //checks if fields are not empty
-    ITEMS[idNew] = {
-      id: idNew,
-      user_id: req.body.user_id,
-      keywords: req.body.keywords,
-      description: req.body.description,
-      image: req.body.image,
-      lat: req.body.lat,
-      lon: req.body.lon,
-      date_from: new Date().toISOString().slice(0, 10) ,
-      date_to: new Date().toISOString().slice(0, 10) }
-
-      res.status(201).json(ITEMS[idNew]) */
       console.log("POST data", req.body)
       if (!req.body.user_id ||  !req.body.lat  || !req.body.lon || !req.body.description || !req.body.keywords ) //check for required fields
       {
@@ -87,31 +68,7 @@ app.post('/item', (req,res) => {
     }
   })
 
-//GET items req 
-/*
-app.get('/items', (req, res) => {
-  if (req.query.user_id) {
-    res.status(200).json(
-    Object.values(ITEMS).filter(i => o.user_id == req.query.user_id))
-   return;
-    }
-    res.status(200).json(
-      Object.values(ITEMS))
-    }) */
 
-/*
-app.get('/items', (req, res) => {
-    var New= []
-    for (let [retrieve, objectValues] of Object.entries(ITEMS)) { // Retrieve the items
-        New.push(objectValues); //push items into variable
-    }
-    if(Object.keys(New).length <= 0){ //if no items were retrieved
-    res.status(204).send('Error: 204 - No Items found.');
-    }
-    else{
-    res.status(200).json(New)
-    }
-}) */
 
 // Filtering username 
 app.get('/items', (req,res)=> {
