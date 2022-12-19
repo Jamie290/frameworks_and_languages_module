@@ -69,11 +69,11 @@
         <div class="row"> <!-- encourages proper grouping of labels, controls, optional help text, and form validation messaging.  -->
             <div class=col> 
                 <label for="user_id">UserName : </label>
-                <input v-model="items.user_id" class="form-control" name="user_id" placeholder="Enter User ID"><br>
+                <input v-model="item.user_id" class="form-control" name="user_id" placeholder="Enter User ID"><br>
             </div> 
             <div class="col">
                 <label for="lat">Latitude : </label>
-                <input v-model="items.lat" class="form-control" name="lat" placeholder="0"><br>
+                <input v-model="item.lat" class="form-control" name="lat" placeholder="0"><br>
             </div> 
             <div class="col">
                 <label for="lon">longitude : </label>
@@ -98,15 +98,20 @@
         <h2 class="text-center my-5">Items</h2>
 <ul>
     <li><!-- Somehow templated for each item -->
-        <img src="item.image">
-        <span data-field="id">{{item.id}} <br></span>
-        <span data-field="User_id">{{item.user_id}}<br></span>
-        <span data-field="Latitude">{{item.lat}}<br></span>
-        <span data-field="Longitude">{{item.lon}}<br></span>
-        <span data-field="Keywords">{{item.keywords}}<br></span>
-        <span data-field="Description">{{item.description}}<br></span>
-        <span data-field="Date">{{item.date_from}}<br></span>
-        ...
+        <img 
+            :src="item.image" 
+            alt="image" 
+            style="width: 280px;height: 200px;" 
+            card="card-img-top">
+        <div class="container my-3">
+        <div class="card-body">
+        <p></p><span data-field="id">{{item.id}} <br></span>
+        <p></p><span data-field="User_id">{{item.user_id}}<br></span>
+        <p><span data-field="Latitude">{{item.lat}}<br></span>
+        <p><span data-field="Longitude">{{item.lon}}<br></span>
+        <p></p><span data-field="Keywords">{{item.keywords}}<br></span>
+        <p></p><span data-field="Description">{{item.description}}<br></span>
+        <p></p><span data-field="Date">{{item.date_from}}<br></span>
         <button data-action="delete_item" someKindOfOnClickAction="delete_item(item.id)">Delete</button>
     </li>
 </ul>
@@ -168,7 +173,7 @@ createApp({     //creating application
             fetch(`${urlAPI}/item`, { //going to item endpoint 
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data), //converts a JavaScript value to a JSON string
+                body: JSON.stringify(this.item), //converts a JavaScript value to a JSON string
             })
             // Handle the response from the server
             .then(response => response.json()) //decoding json response

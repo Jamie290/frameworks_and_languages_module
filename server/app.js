@@ -45,7 +45,7 @@ var ITEMS = {
 }
 
 app.get('/', (req, res) => {
-  return res.status(200).json('<html><body>Welcome</body></html>')
+  return res.status(200).send('<html><body>Welcome</body></html>')
 }) 
 
 app.post('/item', (req,res) => {
@@ -68,7 +68,7 @@ app.post('/item', (req,res) => {
       date_to: new Date().toISOString().slice(0, 10) }
 
       res.status(201).json(ITEMS[idNew]) */
-      
+      console.log("POST data", req.body)
       if (!req.body.user_id ||  !req.body.lat  || !req.body.lon || !req.body.description || !req.body.keywords ) //check for required fields
       {
         return res.status(405).json({message: 'missing fields required'})
