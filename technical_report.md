@@ -42,7 +42,7 @@ It makes it easier to add, remove, or modify routes as needed, without causing e
 [Express routing guide](https://expressjs.com/en/guide/routing.html)
 
 
-### (Path parameters)
+### Path parameters
 
 Path parameters are used to pass data to the server in the URL path. To access the path parameters you use ``` req.params ```. This object would contain all the path parameters for this specific route. 
 
@@ -144,26 +144,26 @@ The process of connecting data in a component to the UI or connecting data in th
 ```java
 <input v-model="item.user_id" class="form-control" name="user_id" placeholder="Enter User ID" /><br>
 ```
-The ```v-model``` directive in the following ```<input>``` element binds the value of the ```input``` to the ```item.user_id``` property in your Vue.js app. Binding can be very difficult to debug if not working properly.
+The ```v-model``` directive in the following ```<input>``` element binds the value of the ```input``` to the ```item.user_id``` property in your Vue.js app. Binding can be very difficult to debug if not working properly. This means that when the user types into the input field, the value of item.user_id in your Vue.js app will be updated to reflect the value that the user has entered.
 
 Benefits:
 - Makes it easier to keep the UI in sync with the data in the component.
 - Allows you to build reusable components that can be easily customized with different data.
 
+[GeekForGeeks V-Bind Directive in Vue.js](https://www.geeksforgeeks.org/v-bind-directive-in-vue-js/)
 
 
-(Technical description of the feature - 40ish words - 1 mark)
-(A code block snippet example demonstrating the feature - 1 mark)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words - 1 mark)
-(Provide reference urls to your sources of information about the feature - required)
+### Event-handling
+The process of choosing what to do in response to a particular event that happens in a user interface is known as event handling. User activities like clicking a button or entering text into a form can start an event, as can system events like a timer running out or data being received over a network connection. You can use event handling to send data to the server or load data from the server when an event occurs.
 
 
-### (name of Feature 3)
+``` java
+<form @submit.prevent="create_item">
 
-(Technical description of the feature - 40ish words - 1 mark)
-(A code block snippet example demonstrating the feature - 1 mark)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words - 1 mark)
-(Provide reference urls to your sources of information about the feature - required)
+```
+This line listens for a form submission event and tells Vue.js to call the create_item method when the event occurs. When the user clicks the submit button on the form, the create_item method will be called and the form submission event will be prevented from causing the page to refresh.
+
+[Handling events with Vue.js](https://vuejsdevelopers.com/2020/01/06/handling-events-vue-js/)
 
 
 Client Language Features
