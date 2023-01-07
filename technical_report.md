@@ -8,7 +8,7 @@ Server Framework Features
 
 ### Middleware
 
-Middleware can be used to perform tasks such as handling authentication, parsing request data,  and modifying the response. It has access to the request(req) and response(res) objects, and the also the next function that is using middleware in the application's request-response cycle. 
+Middleware can be used to perform tasks such as handling authentication, parsing request data,  and modifying the response. It has access to the request(req) and response(res) objects, and also the next function that is using middleware in the application's request-response cycle. 
 ``` java
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,14 +28,14 @@ This line of code is from the route ```/items ``` we can see that it accepts ite
 
 ### Routing
 
-Routing refers to the process of how an application would respond to a client creating a HTTP request made to a specific endpoint.  - 1 mark
+Routing refers to the process of how an application would respond to a client creating a HTTP request made to a specific endpoint. 
 ```java
 app.get('/items', (req,res) => {
   // ...
 });
 
 ```
-This line of code defines a route that handles GET requests to the /items route. whenever a GET request is made to this route the callback function is executed, and has access to the req and res objects.
+This line of code defines a route that handles GET requests to the ```/items``` route. Whenever a GET request is made to this route the callback function is executed, and has access to the req and res objects.
 
 It makes it easier to add, remove, or modify routes as needed, without causing errors in the application. Routing helps to modularize the code and keep it organized, it allows you to separate the application into different functions that are only executed if it is requested by the client.
 
@@ -45,6 +45,8 @@ It makes it easier to add, remove, or modify routes as needed, without causing e
 ### (Path parameters)
 
 Path parameters are used to pass data to the server in the URL path. To access the path parameters you use ``` req.params ```. This object would contain all the path parameters for this specific route. 
+
+They provide you the option to include dynamic values in the URL, which you can use to define particular resources or perform operations on them.
 
 ``` java
 app.get('/item/:id', (req,res) => { 
@@ -59,6 +61,8 @@ app.get('/item/:id', (req,res) => {
 ```
 In this route, the ```:id``` path parameter is used to specify that an ```id``` value should be included in the URL path. The value of the ```id``` parameter is then accessed using the ```req.params.id``` property.
 
+
+
 [Express route paths guide](https://expressjs.com/en/guide/routing.html)
 
 
@@ -66,34 +70,87 @@ In this route, the ```:id``` path parameter is used to specify that an ```id``` 
 Server Language Features
 -----------------------
 
-### (name of Feature 1)
+### Template literals
+---
+Template literals are string literals that allow embedded expressions, to construct a string that contains HTML. Its a feature that allows you to define strings using a special syntax that makes it easier to include variables and expressions in the string. 
+``` java
+app.get('/item/:id', (req,res) => {
+  if(ITEMS[req.params.id] === undefined){
+    res.status(404).json(`Item with ID ${req.params.id} not found`);
+  }
+  // ...
+});
 
-(Technical description of the feature - 40ish words - 1 mark)
-(A code block snippet example demonstrating the feature - 1 mark)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words - 1 mark)
-(Provide reference urls to your sources of information about the feature - required)
+```
+In this code, a route that handles GET requests to the ```/item/:id``` path is defined. The callback function uses a template literal as the argument for the ```res.status().json()``` function, which sends a JSON response to the client with the specified status code. The template literal contains a string with an embedded expression that is the value of the ```req.params.id``` property, which is the value of the ```:id``` route parameter.
+
+Benefits: 
+- They are more readable
+- They allow you to easily include multi-line strings without having to use escape characters.
+- They allow you to include expressions directly inside the string
+
+[W3Schools javascript template literals](https://www.w3schools.com/js/js_string_templates.asp)
 
 
-### (name of Feature 2)
+### Constants
+----
+Constants are variables that cannot be reassigned. They are declared using the const keyword, followed by the name of the constant and its value.
 
-(Technical description of the feature - 40ish words - 1 mark)
-(A code block snippet example demonstrating the feature - 1 mark)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words - 1 mark)
-(Provide reference urls to your sources of information about the feature - required)
+``` java
+const express = require('express');
+const app = express();
+const port = 8000;
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+``` 
+In these lines of code, constants are created for the imported modules and the port number. 
+
+Constants make the code easier to read and understand, as it clearly indicates that this variable would remain the same through out the whole application. It prevents accidental changes to the variable making it easier to maintain, also risks of bugs are much lower.
+
+[MDN web docs Express introduction](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction)
+
+### ```for...in``` loop
+----
+The ```for...in``` loop is used to iterate over the properties of an object. It is frequently used to conduct an action on each property or to get the values of an object's properties.
+``` java
+app.delete('/items', (req, res) => {
+  if (req.query.user_id){
+    for (let id in ITEMS){
+      if (ITEMS[id].user_id == req.query.user_id){
+        delete ITEMS[id]
+      }
+    }
+    res.status(200).json(`All items from user ${req.query.user_id} have been deleted`)
+    return;
+  }
+  // ...
+});
+```
+ In this code it iterates over the items in the ```ITEMS``` object. The loop checks if the ```user_id``` property of the current item matches the value of the ```user_id``` query parameter. If it does, the loop deletes the item from the ```ITEMS``` object. However it can iterate over inherited properties which we dont want to do.
+
+ Benefits: 
+ - Easy to use
+ - Iterates over objects and also iterates over the properties of an object in the order that they were added to the object
+
+[MDN web docs References for...in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
 
 
 Client Framework Features
 -------------------------
 
-### (name of Feature 1)
+### Binding
+The process of connecting data in a component to the UI or connecting data in the component's state to the UI is known as data binding. When the data in the component changes, you may update the UI, and vice versa.
+```java
+<input v-model="item.user_id" class="form-control" name="user_id" placeholder="Enter User ID" /><br>
+```
+The ```v-model``` directive in the following ```<input>``` element binds the value of the ```input``` to the ```item.user_id``` property in your Vue.js app. Binding can be very difficult to debug if not working properly.
 
-(Technical description of the feature - 40ish words - 1 mark)
-(A code block snippet example demonstrating the feature - 1 mark)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words - 1 mark)
-(Provide reference urls to your sources of information about the feature - required)
+Benefits:
+- Makes it easier to keep the UI in sync with the data in the component.
+- Allows you to build reusable components that can be easily customized with different data.
 
 
-### (name of Feature 2)
 
 (Technical description of the feature - 40ish words - 1 mark)
 (A code block snippet example demonstrating the feature - 1 mark)
