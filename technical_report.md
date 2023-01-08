@@ -186,7 +186,7 @@ Text interpolation allows you to bind data to the text content of an element, th
                 <p>Description: <span data-field="description">{{ item.description }}<br></span></p>
                 <p>Date: <span >{{ item.date_from }}<br></span></p>
 ```
-This decreases the amount of boilerplate code required to update the UI when the data changes and makes it simple to maintain the UI in sync with the component's data, meaning the website does not need to refresh.
+This decreases the amount of boilerplate code required to update the UI when the data changes and makes it simple to maintain the UI in sync with the component's data, meaning theres no need to rerender.
 
 - [Angular Interpolation](https://angular.io/guide/interpolation)
 * [Vue.js Template Syntax](https://vuejs.org/guide/essentials/template-syntax.html)
@@ -197,7 +197,7 @@ This decreases the amount of boilerplate code required to update the UI when the
 
 ------------------------
 
-### This
+#### This
 
 The ```this``` keyword refers to the context or current object in which it is used. In JavaScript, the value of ```this``` can change depending on how a function is called. If ```this``` was used in a object method, ```this``` would be referring to the object itself.
 
@@ -233,42 +233,76 @@ The ```fetch``` function used is an example of an async operation. It sends an H
 
 [HookDeck Introduction to Asynchronous Processing ](https://hookdeck.com/blog/post/introduction-asynchronous-processing#what-is-asynchronous-processing)
 
+---
+## Critique of Server/Client prototype
 
-Critique of Server/Client prototype
----------------------
+---
 
-### (name of Issue 1)
+### Validation
 
-(A code snippet example demonstrating the feature - 1 mark)
-(Explain why this pattern is problematic - 40ish words 1 mark)
+```java
+app.post('/item', (req,res) => {
+      console.log("POST data", req.body)
+      if (!req.body.user_id ||  !req.body.lat  || !req.body.lon || !req.body.description || !req.body.keywords ) 
+      {
+        return res.status(405).json({message: 'missing fields required'})
+      }
+      else{
+      ID=  Math.max( ...Object.keys(ITEMS)) +1; 
+      if(ID == "-Infinity"){
+        ID= 0
+      }
+      req.body.id=ID; 
+      req.body.date_from= new Date().toISOString().slice(0, 10) 
+      ITEMS[ID]=req.body; 
+      res.status(201).json(ITEMS[ID])
+      console.log(ITEMS[ID])
+    }
+  })
+```
 
-### (name of Issue 2)
+It does not validate the input data for the ```POST/items``` endpoint. The code only checks that certain required fields are present, but it does not verify that the data in these fields is in the correct format or meets any other requirements. This can lead to issues with the API, as it may receive data that it is not able to handle or process correctly.
 
-(A code snippet example demonstrating the feature - 1 mark)
-(Explain why this pattern is problematic - 40ish words 1 mark)
+[HEVO What is Data Validation?](https://hevodata.com/learn/data-validation/)
 
+---
+## 
 
-Future Technology Suggestions
------------------------------
+```java 
+<input v-model="item.user_id" class="form-control" name="user_id" placeholder="Enter User ID" />
+
+``` 
+
+Using the ```<input>``` element without a type attribute means the input element will default to a type of "text". This may not be the intended behavior, as the input element could be used to accept other types of data such as ```longitude``` (which is supposed to be an integer) or ```description```.
+
+---
+## Future Technology Suggestions
+---
+
 
 ### Serverless architecture
 
 Serverless architecture is a design pattern managed by a cloud provider, such as AWS, Azure, or Google Cloud. The application is built around functions that are executed in response to specific events meaning its more cost-effective. Using a serverless architecture is that it allows developers to focus on writing code, rather than managing server infrastructure or up-scaling. However it can be more difficult to coordinate and debug these serverless functions as they are event driven and deployed independently.
 
 - [AWS Serverless architecture](https://aws.amazon.com/lambda/serverless-architectures-learn-more/#:~:text=What%20is%20a%20serverless%20architecture,management%20is%20done%20by%20AWS.)
-- [ServerWatch Serverless architecture](https://www.serverwatch.com/virtualization/serverless-benefits-challenges/#serverless-computing-challenges)
+- [ServerWatch Serverless architecture](https://www.serverwatch.com/virtualization/serverless-benefits-challenges/#serverless-computing-challenges). 
 
+  ---
 
+### NoSQL  
 
-### (name of technology/feature 2)
+NoSQL, which stands for "Not Only SQL," is a kind of database management system created to handle huge amounts of distributed, unstructured, and dynamic data.
+This allows developers to store data in a flexible and scalable manner, rather than being limited by using a traditional database. NoSQL databases are highly available and to manage enormous volumes of traffic, data is shared over numerous servers. However it can be difficult to maintain as their is lack of normalization, lack of data normalization means that data is repeated in the database and requires the programmer to remember all of the locations where it is stored and keep them up to date.
 
-(Description of a feature or tool - 40ish words - 1 mark)
-(Why/benefits/problems with using this - 40ish words - 1 mark)
-(Provide reference urls to your source of information about this technology - required)
+- [NoSQL databases are the problem](https://mindmatters.ai/2022/01/nosql-databases-are-the-problem-not-the-solution/)
 
+- [MongoDB](https://www.mongodb.com/nosql-explained)
 
-### (name of technology/feature 3)
+---
+### Single Page Applications
 
-(Description of a feature or tool - 40ish words - 1 mark)
-(Why/benefits/problems with using this - 40ish words - 1 mark)
-(Provide reference urls to your source of information about this technology - required)
+A single page application (SPA) is a web application that loads a single HTML page. As the user interacts with the app the single page application dynamically updates the webpage, instead of the default method of a web browser loading entire new pages. This means that there is no need to refresh the page which increases performance and provides a more seamless experience for the user. However SPA's require alot of browser resources as since the web browser is doing most the tasks for the SPA.
+
+- [net solutions What is Single Page Application (SPA)? ](https://www.netsolutions.com/insights/single-page-application/)
+- [Bloomreach What Are Single Page Applications and Why Do People Like Them So Much?](https://www.bloomreach.com/en/blog/2018/what-is-a-single-page-application)
+
