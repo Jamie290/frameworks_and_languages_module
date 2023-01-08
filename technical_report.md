@@ -1,9 +1,10 @@
-Technical Report
-================
+# Technical Report
+
 
 This technical reports contains justification and the description for the chosen framework features and language features that i decided to use to create my Freecycle project. I will be underlining why it is so beneficial to use frameworks to create applications while also critiquing my client and server.
 
-Server Framework Features
+---
+## Server Framework Features
 -------------------------
 
 ### Middleware
@@ -25,6 +26,7 @@ This line of code is from the route ```/items ``` we can see that it accepts ite
 
 [Parsing the Body & Handling CORS](https://academind.com/tutorials/building-a-restful-api-with-nodejs)
 
+---
 
 ### Routing
 
@@ -41,6 +43,7 @@ It makes it easier to add, remove, or modify routes as needed, without causing e
 
 [Express routing guide](https://expressjs.com/en/guide/routing.html)
 
+---
 
 ### Path parameters
 
@@ -66,12 +69,12 @@ In this route, the ```:id``` path parameter is used to specify that an ```id``` 
 [Express route paths guide](https://expressjs.com/en/guide/routing.html)
 
 
-
-Server Language Features
+---
+## Server Language Features
 -----------------------
 
 ### Template literals
----
+
 Template literals are string literals that allow embedded expressions, to construct a string that contains HTML. Its a feature that allows you to define strings using a special syntax that makes it easier to include variables and expressions in the string. 
 ``` java
 app.get('/item/:id', (req,res) => {
@@ -91,9 +94,10 @@ Benefits:
 
 [W3Schools javascript template literals](https://www.w3schools.com/js/js_string_templates.asp)
 
+---
 
 ### Constants
-----
+
 Constants are variables that cannot be reassigned. They are declared using the const keyword, followed by the name of the constant and its value.
 
 ``` java
@@ -135,8 +139,10 @@ app.delete('/items', (req, res) => {
 
 [MDN web docs References for...in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
 
+---
 
-Client Framework Features
+
+## Client Framework Features
 -------------------------
 
 ### Binding
@@ -152,6 +158,7 @@ Benefits:
 
 [GeekForGeeks V-Bind Directive in Vue.js](https://www.geeksforgeeks.org/v-bind-directive-in-vue-js/)
 
+---
 
 ### Event-handling
 The process of choosing what to do in response to a particular event that happens in a user interface is known as event handling. User activities like clicking a button or entering text into a form can start an event, as can system events like a timer running out or data being received over a network connection. You can use event handling to send data to the server or load data from the server when an event occurs.
@@ -165,23 +172,66 @@ This line listens for a form submission event and tells Vue.js to call the creat
 
 [Handling events with Vue.js](https://vuejsdevelopers.com/2020/01/06/handling-events-vue-js/)
 
+---
+### Text interpolation
 
-Client Language Features
+Text interpolation allows you to bind data to the text content of an element, the  ```{{ }}``` syntax are used as delimiters and allows it to be displayed. Text interpolation is useful for displaying dynamic content in the UI, content such as inputs from the user or fetching data from a server. 
+
+```html
+<p>ID: <span data-field="id">{{ item.id }} <br></span></p>
+                <p>User ID: <span data-field="user_id">{{ item.user_id }}<br></span></p>
+                <p>Latitude: <span data-field="lat">{{ item.lat }}<br></span></p>
+                <p>Longitude: <span data-field="lon">{{ item.lon }}<br></span></p>
+                <p>Keywords: <span data-field="keywords">{{ item.keywords }}<br></span></p>
+                <p>Description: <span data-field="description">{{ item.description }}<br></span></p>
+                <p>Date: <span >{{ item.date_from }}<br></span></p>
+```
+This decreases the amount of boilerplate code required to update the UI when the data changes and makes it simple to maintain the UI in sync with the component's data, meaning the website does not need to refresh.
+
+- [Angular Interpolation](https://angular.io/guide/interpolation)
+* [Vue.js Template Syntax](https://vuejs.org/guide/essentials/template-syntax.html)
+
+
+---
+## Client Language Features
+
 ------------------------
 
-### (name of Feature 1)
+### This
 
-(Technical description of the feature - 40ish words - 1 mark)
-(A code block snippet example demonstrating the feature - 1 mark)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words - 1 mark)
-(Provide reference urls to your sources of information about the feature - required)
+The ```this``` keyword refers to the context or current object in which it is used. In JavaScript, the value of ```this``` can change depending on how a function is called. If ```this``` was used in a object method, ```this``` would be referring to the object itself.
 
-### (name of Feature 2)
+```java
+created(){
+        this.clear_item()
+        this.get_ITEMS()
+      },
+```
+```this``` refers to the current Vue component and is used to access the ```clear_item```  and ```get_ITEMS``` methods. The ```this``` keyword is a useful tool for passing references to objects in Java.
 
-(Technical description of the feature - 40ish words - 1 mark)
-(A code block snippet example demonstrating the feature - 1 mark)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words - 1 mark)
-(Provide reference urls to your sources of information about the feature - required)
+- [W3schools this ](https://www.w3schools.com/js/js_this.asp)
+- [StackOverflow 'this' meaning](https://stackoverflow.com/questions/3728062/what-is-the-meaning-of-this-in-java)
+
+---
+
+### Asynchronous processing
+
+Asynchronous processing is the process of carrying out tasks in the background while leaving the main thread of execution unobstructed. This enables the async operation to proceed while the program is still running, and it also enables the program to deal with the results of the operation once it has finished.
+
+```java
+get_ITEMS() {
+            fetch(`${urlAPI}/items`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => this.items = data)
+            .then(data => console.log('data', data))
+            .catch(err => console.error(err))}         
+```
+
+The ```fetch``` function used is an example of an async operation. It sends an HTTP request to an API and returns a Promise that resolves with the response when the request is complete. 
+
+[HookDeck Introduction to Asynchronous Processing ](https://hookdeck.com/blog/post/introduction-asynchronous-processing#what-is-asynchronous-processing)
 
 
 Critique of Server/Client prototype
@@ -201,11 +251,13 @@ Critique of Server/Client prototype
 Future Technology Suggestions
 -----------------------------
 
-### (name of technology/feature 1)
+### Serverless architecture
 
-(Description of a feature or tool - 40ish words - 1 mark)
-(Why/benefits/problems with using this - 40ish words - 1 mark)
-(Provide reference urls to your source of information about this technology - required)
+Serverless architecture is a design pattern managed by a cloud provider, such as AWS, Azure, or Google Cloud. The application is built around functions that are executed in response to specific events meaning its more cost-effective. Using a serverless architecture is that it allows developers to focus on writing code, rather than managing server infrastructure or up-scaling. However it can be more difficult to coordinate and debug these serverless functions as they are event driven and deployed independently.
+
+- [AWS Serverless architecture](https://aws.amazon.com/lambda/serverless-architectures-learn-more/#:~:text=What%20is%20a%20serverless%20architecture,management%20is%20done%20by%20AWS.)
+- [ServerWatch Serverless architecture](https://www.serverwatch.com/virtualization/serverless-benefits-challenges/#serverless-computing-challenges)
+
 
 
 ### (name of technology/feature 2)
