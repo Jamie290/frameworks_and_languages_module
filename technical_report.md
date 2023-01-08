@@ -114,6 +114,8 @@ Constants make the code easier to read and understand, as it clearly indicates t
 
 [MDN web docs Express introduction](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction)
 
+---
+
 ### ```for...in``` loop
 ----
 The ```for...in``` loop is used to iterate over the properties of an object. It is frequently used to conduct an action on each property or to get the values of an object's properties.
@@ -197,7 +199,7 @@ This decreases the amount of boilerplate code required to update the UI when the
 
 ------------------------
 
-#### This
+#### ```This``` 
 
 The ```this``` keyword refers to the context or current object in which it is used. In JavaScript, the value of ```this``` can change depending on how a function is called. If ```this``` was used in a object method, ```this``` would be referring to the object itself.
 
@@ -266,7 +268,7 @@ It does not validate the input data for the ```POST/items``` endpoint. The code 
 [HEVO What is Data Validation?](https://hevodata.com/learn/data-validation/)
 
 ---
-## 
+## Input type
 
 ```java 
 <input v-model="item.user_id" class="form-control" name="user_id" placeholder="Enter User ID" />
@@ -275,6 +277,7 @@ It does not validate the input data for the ```POST/items``` endpoint. The code 
 
 Using the ```<input>``` element without a type attribute means the input element will default to a type of "text". This may not be the intended behavior, as the input element could be used to accept other types of data such as ```longitude``` (which is supposed to be an integer) or ```description```.
 
+[StackOverflow Will input default to a type of text? ](https://stackoverflow.com/questions/33637093/will-input-default-to-a-type-of-text#:~:text=An%20input%20element%20with%20no,attribute%20set%20to%20%22text%22.&text=so%20even%20if%20I%20specify,type%20on%20the%20processing%20side.)
 ---
 ## Future Technology Suggestions
 ---
