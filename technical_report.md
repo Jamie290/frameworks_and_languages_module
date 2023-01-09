@@ -24,7 +24,8 @@ res.status(200).json(Object.values(ITEMS))
 This line of code is from the route ```/items ``` we can see that it accepts item data in json format, this means that we use ```app.use(express.json())``` to parse JSON data in the request body and makes it available in the req.body property.
 
 
-[Parsing the Body & Handling CORS](https://academind.com/tutorials/building-a-restful-api-with-nodejs)
+- [Express Parsing the body](https://expressjs.com/en/resources/middleware/body-parser.html)
+- [Parsing the Body & Handling CORS](https://academind.com/tutorials/building-a-restful-api-with-nodejs)
 
 ---
 
@@ -92,8 +93,8 @@ Benefits:
 - They allow you to easily include multi-line strings without having to use escape characters.
 - They allow you to include expressions directly inside the string
 
-[W3Schools javascript template literals](https://www.w3schools.com/js/js_string_templates.asp)
-
+- [W3Schools javascript template literals](https://www.w3schools.com/js/js_string_templates.asp)
+- [MDN web docs Temp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 ---
 
 ### Constants
